@@ -19,9 +19,11 @@ if [[ "$root_type" == crypt ]]; then
     [[ -b "/dev/$parent" ]] || { echo 'LUKS backing device is missing.' >&2; exit 1; }
     luks_uuid="$(cryptsetup luksUUID "/dev/$parent")"
     mapper="$(dmsetup info -c --noheadings -o name "$root_device" | xargs)"
-    printf '%s UUID=%s none luks\n' "$mapper" "$luks_uuid" > /etc/crypttab
-    cp /etc/crypttab /etc/crypttab.initramfs
-    kernel_params="rd.luks.name=${luks_uuid}=${mapper} $kernel_params"
+    printf '%s UUID=%s none luks,timeout=0,x-initrd.attach\n' "$mapper" "$luks_uuid" > /etc/crypttab
+    rm -f /etc/crypttab.initramfs
+    # The password prompt can wait indefinitely, but the root UUID device job
+    # otherwise expires first (normally after 90 s). Keep both waits aligned.
+    kernel_params="rd.luks.name=${luks_uuid}=${mapper} rd.luks.options=timeout=0 rootflags=subvol=@,x-systemd.device-timeout=0 rw"
 fi
 # Remove Live-only boot settings and root console autologin.
 rm -f /etc/mkinitcpio.conf.d/archiso.conf /etc/mkinitcpio.d/archiso.preset
@@ -81,6 +83,8 @@ chmod 440 /etc/sudoers.d/10-basaltos-wheel
 while IFS=: read -r name _ uid _ _ user_home _; do
     if (( uid >= 1000 && uid < 60000 )) && [[ -d "$user_home" ]]; then
         cp -a /etc/skel/. "$user_home/"
+        # xdg-user-dirs resets missing Desktop directories to the home folder.
+        mkdir -p "$user_home/Desktop"
         chown -R "$name:$name" "$user_home"
     fi
 done < /etc/passwd

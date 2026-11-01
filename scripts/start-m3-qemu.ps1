@@ -39,7 +39,7 @@ if ($Boot -eq 'live') {
     $qemuArgs += @('-boot','d','-cdrom',$Iso)
 } else { $qemuArgs += @('-boot','c') }
 if ($Firmware -eq 'uefi') {
-    $varsFile = Join-Path $testDir 'edk2-vars.fd'
+    $varsFile = Join-Path $testDir (([IO.Path]::GetFileNameWithoutExtension($Disk)) + '.edk2-vars.fd')
     if (-not (Test-Path -LiteralPath $varsFile)) { Copy-Item -LiteralPath (Join-Path $qemuRoot 'share\qemu\edk2-i386-vars.fd') -Destination $varsFile }
     $codeFile = Join-Path $qemuRoot 'share\qemu\edk2-x86_64-code.fd'
     $qemuArgs += @('-drive',"if=pflash,format=raw,readonly=on,file=$codeFile",'-drive',"if=pflash,format=raw,file=$varsFile")
@@ -50,5 +50,10 @@ $logPrefix = Join-Path $testDir "qemu-$Boot-$Firmware-$Accelerator"
 $windowStyle = if ($Display -eq 'none') { 'Hidden' } else { 'Normal' }
 $qemuProcess = Start-Process -FilePath $qemuExe -ArgumentList $qemuArgs -WindowStyle $windowStyle `
     -RedirectStandardError "$logPrefix.stderr.log" -RedirectStandardOutput "$logPrefix.stdout.log" -PassThru
+Start-Sleep -Milliseconds 750
+if ($qemuProcess.HasExited) {
+    $details = Get-Content -LiteralPath "$logPrefix.stderr.log" -Raw
+    throw "QEMU exited during startup (code $($qemuProcess.ExitCode)). $details"
+}
 $qemuProcess.Id | Set-Content "$logPrefix.pid"
 Write-Output "QEMU PID $($qemuProcess.Id); boot=$Boot; firmware=$Firmware; QMP=127.0.0.1:$QmpPort; disk=$Disk"

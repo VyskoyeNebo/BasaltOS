@@ -19,7 +19,11 @@ parser.add_argument('--width', type=int, default=1280)
 parser.add_argument('--height', type=int, default=800)
 parser.add_argument('--double', action='store_true', help='Double-click for desktop launchers')
 args = parser.parse_args()
-connection = socket.create_connection((args.host, args.port), timeout=10)
+try:
+    connection = socket.create_connection((args.host, args.port), timeout=10)
+except OSError as error:
+    parser.exit(1, f'QMP unavailable at {args.host}:{args.port}: {error}. '
+                'Check that the BasaltOS QEMU test VM is running and uses this port.\n')
 stream = connection.makefile('rwb', buffering=0)
 greeting = stream.readline()
 if not greeting:

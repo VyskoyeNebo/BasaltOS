@@ -3,6 +3,13 @@
 在 M2 仓库继续构建，输出目录为 `out/m3/`。M1、M2 ISO 保留。
 桌面、Fcitx5、中文 locale、时区、hostname 和清华镜像配置沿用 M2。
 
+加密安装使用 `sd-encrypt`，通过 `/etc/crypttab` 的 `x-initrd.attach` 将根卷
+配置纳入 initramfs。`rd.luks.options=timeout=0` 与
+`rootflags=subvol=@,x-systemd.device-timeout=0` 同时取消口令和根设备的等待时限，
+避免人在解锁提示停留时根设备先超时。参考
+[systemd crypttab](https://www.freedesktop.org/software/systemd/man/latest/crypttab.html) 与
+[Arch 加密启动配置](https://wiki.archlinux.org/title/Dm-crypt/System_configuration)。
+
 ## 构建安装器本地包
 
 Arch 官方仓库未提供 Calamares。本项目使用上游 Calamares 3.4.3 的 orig 源码，
@@ -87,7 +94,7 @@ snap-pac 包自带 pacman 事务 hook，管理根目录软件包事务快照。
 沿用 M2 项目内便携 QEMU。创建**新的空白测试盘**并启动 Live：
 
 ```powershell
-.\scripts\start-m3-qemu.ps1 -Boot live -Firmware bios -Accelerator whpx -CreateDisk
+.\scripts\start-m3-qemu.ps1 -Boot live -Firmware uefi -Accelerator whpx -CreateDisk
 ```
 
 测试盘默认 `E:\BasaltOS\work\m3\installed.qcow2`，虚拟容量 48 GiB，
@@ -101,13 +108,14 @@ Live 登录账号为 `root`，密码 `basaltos`。双击桌面“安装 BasaltOS
 安装完成后关机，**不挂载 ISO**，从同一测试盘启动：
 
 ```powershell
-.\scripts\start-m3-qemu.ps1 -Boot disk -Firmware bios -Accelerator whpx
-# UEFI 使用同一测试盘，独立项目内 NVRAM 文件：
 .\scripts\start-m3-qemu.ps1 -Boot disk -Firmware uefi -Accelerator whpx
+# BIOS 使用同一测试盘：
+.\scripts\start-m3-qemu.ps1 -Boot disk -Firmware bios -Accelerator whpx
 ```
 
 同一测试盘不能被两个 QEMU 进程同时写入。WHPX 不可用时可指定 `-Accelerator tcg`。
 UEFI 配置使用 QEMU 自带 EDK2，不包含 Secure Boot 签名流程。
+每个测试盘使用同名的 `.edk2-vars.fd` 文件，候选盘与正式验收盘的固件启动项相互独立。
 
 截图示例：
 
@@ -132,3 +140,8 @@ bash /tmp/install-m3-test.sh --erase-basaltos-m3-test-disk
 如实际采用此路线，必须在结果文档区分“Calamares 界面验证”和“脚本安装验证”。
 
 最终实际通过项目、产物校验值和限制见 `M3-RESULTS.md`。
+
+已安装的专用测试机中，可用 root 执行 `scripts/check-m3-installed.sh`。
+脚本检查加密卷、子卷、root/home Snapper、服务、输入法与网络，并通过
+`pacman -Syu --noconfirm nano` 触发一次真实软件包事务，要求新增至少两个 root 快照。
+脚本只接受带本项目测试序列号的 `/dev/vda`；其日志回传宿主 `work/m3/`。
