@@ -11,5 +11,6 @@
   "airootfs/etc/systemd/system/multi-user.target.wants/pacman-init.service": "../pacman-init.service",
   "airootfs/etc/systemd/system/multi-user.target.wants/systemd-resolved.service": "/usr/lib/systemd/system/systemd-resolved.service",
   "airootfs/etc/systemd/system/sysinit.target.wants/systemd-time-wait-sync.service": "/usr/lib/systemd/system/systemd-time-wait-sync.service",
-  "airootfs/etc/systemd/system/sysinit.target.wants/systemd-timesyncd.service": "/usr/lib/systemd/system/systemd-timesyncd.service"
+  "airootfs/etc/systemd/system/sysinit.target.wants/systemd-timesyncd.service": "/usr/lib/systemd/system/systemd-timesyncd.service",
+  "airootfs/etc/systemd/user/default.target.wants/gamemoded.service": "/usr/lib/systemd/user/gamemoded.service"
 }

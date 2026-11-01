@@ -1,0 +1,9 @@
+[Unit]
+Description=Prepare BasaltOS gaming accounts
+After=systemd-sysusers.service
+Before=display-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /usr/local/lib/basaltos/gaming-accounts.sh
+RemainAfterExit=yes

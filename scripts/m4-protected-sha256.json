@@ -1,0 +1,114 @@
+{
+  "profile/airootfs/etc/calamares/modules/bootloader.conf": {
+    "type": "file",
+    "sha256": "258aac75235f22c79c9af52c694df673553876c18ac869439c4209dacb737340"
+  },
+  "profile/airootfs/etc/calamares/modules/finished.conf": {
+    "type": "file",
+    "sha256": "351632f7754cb1debbf76cd8f80fcb3496e8305cd12d3d7b2c4279d0ae26cfad"
+  },
+  "profile/airootfs/etc/calamares/modules/keyboard.conf": {
+    "type": "file",
+    "sha256": "26025c479ab7cbfaf459b0ed4d31dae7bebac5bc84b9a916b7cf5594a1443acf"
+  },
+  "profile/airootfs/etc/calamares/modules/locale.conf": {
+    "type": "file",
+    "sha256": "76329b8bcc09820fcef48ea9810e65a34393b3d374b285d373730ab45605b37f"
+  },
+  "profile/airootfs/etc/calamares/modules/mount.conf": {
+    "type": "file",
+    "sha256": "c26002033cea7db7c85f74e0ba3ae5cd79900e700eddea9941bd67701253d1cf"
+  },
+  "profile/airootfs/etc/calamares/modules/partition.conf": {
+    "type": "file",
+    "sha256": "e0c95c3f0ac16a905351f271bfd37e09cee3c5af8407aa8c0aacac260fd7a0b5"
+  },
+  "profile/airootfs/etc/calamares/modules/shellprocess.conf": {
+    "type": "file",
+    "sha256": "8484de30cfaa6079255fcc47fc530ccf4d9427ad6874f828c4b1338769b96e38"
+  },
+  "profile/airootfs/etc/calamares/modules/unpackfs.conf": {
+    "type": "file",
+    "sha256": "fdaa6e9bc93cbb54afba6f89f54829ff7853e5df2a2c99ed5c63e537848995c5"
+  },
+  "profile/airootfs/etc/calamares/modules/users.conf": {
+    "type": "file",
+    "sha256": "e1849acb1c9d24de9bc8abb6db1b4d20ed2e5fc85427788ea7410841a382f4bd"
+  },
+  "profile/airootfs/etc/calamares/modules/welcome.conf": {
+    "type": "file",
+    "sha256": "3937095201d1b0b4c0f197f36b3e8c14a082ba90d5dd1fa423456cb9f2c44eb2"
+  },
+  "profile/airootfs/etc/calamares/settings.conf": {
+    "type": "file",
+    "sha256": "97512598493f8a9d5cf0c6f28ceea258dd9f5a92b5b87e0b0e24922e0bf15f71"
+  },
+  "profile/airootfs/etc/hostname": {
+    "type": "file",
+    "sha256": "dd012c109e3282a587b455903db805d66e1a0eafbaea1c3a828fa8ef5a47af0b"
+  },
+  "profile/airootfs/etc/locale.conf": {
+    "type": "file",
+    "sha256": "0f015bc2f034144d2de10f94b6f4312b1ee69c5519dc008afe4c03ac98167ccc"
+  },
+  "profile/airootfs/etc/locale.gen": {
+    "type": "file",
+    "sha256": "e00b6d270fd3d3e54ac22a9f50cf5c7a6e8d044087478b719790cbb07802bb07"
+  },
+  "profile/airootfs/etc/localtime": {
+    "type": "link",
+    "target": "/usr/share/zoneinfo/Asia/Shanghai"
+  },
+  "profile/airootfs/etc/mkinitcpio.conf.d/archiso.conf": {
+    "type": "file",
+    "sha256": "7b08d6fc9d97159f66a4b637fb524eb94ae1f6dd472884f45388950a1f2078a0"
+  },
+  "profile/airootfs/etc/vconsole.conf": {
+    "type": "file",
+    "sha256": "2c09b43e51de87a82ff5eeb1c599ce25800b8d34810f14044bf73644e9f7b742"
+  },
+  "profile/airootfs/usr/local/lib/basaltos/finalize-installed.sh": {
+    "type": "file",
+    "sha256": "ca6f5b2d9bec46e37a382176e78309475a21c856007110e5759e5cbe8470d1f2"
+  },
+  "profile/airootfs/usr/share/calamares/branding/basaltos/branding.desc": {
+    "type": "file",
+    "sha256": "1096699c6ebd81fb849686f4b56c4fbffa4745346334777e50020a6b5546e1f6"
+  },
+  "profile/airootfs/usr/share/calamares/branding/basaltos/show.qml": {
+    "type": "file",
+    "sha256": "44aa6bad32b59f7dbbc1abaca706b5d9cf49107bcb800ccff0563f805b5b3d57"
+  },
+  "profile/efiboot/loader/entries/01-archiso-linux.conf": {
+    "type": "file",
+    "sha256": "adbeec56c3665fb789ee321c934656a7bed4dfbae3003f697ce686b6bf4e8137"
+  },
+  "profile/efiboot/loader/loader.conf": {
+    "type": "file",
+    "sha256": "63244d29c68ee7de70aa2b541b59ccbdf51148f611ea95a67236d4b0e23d09ef"
+  },
+  "profile/grub/grub.cfg": {
+    "type": "file",
+    "sha256": "a5b63f1b3a28012a5bfc64a579422b48dd60711dad8ef08ac7c1ec52cad1d1b3"
+  },
+  "profile/grub/loopback.cfg": {
+    "type": "file",
+    "sha256": "a7c446fa560b767d03a794d22e3397c331822f63070a52e73ea3a5cad46e3dad"
+  },
+  "profile/syslinux/archiso_head.cfg": {
+    "type": "file",
+    "sha256": "f0b7c85634e54baae024ce1b4e34267467c491cfb944d33d6981c855cf282041"
+  },
+  "profile/syslinux/archiso_sys-linux.cfg": {
+    "type": "file",
+    "sha256": "06ec74d7d1eb2ceb98b9fdc12d044f5fc3f7451209e6726ee34ff92a999c1e6d"
+  },
+  "profile/syslinux/archiso_sys.cfg": {
+    "type": "file",
+    "sha256": "0dce48680d9742af1cea05e4c3aa8c20ac8a50267a1627a8a8328dc3aa7e1027"
+  },
+  "profile/syslinux/syslinux.cfg": {
+    "type": "file",
+    "sha256": "e225f9db56514e69c1303767d102aa81cb079a96436020678278532057c400bb"
+  }
+}

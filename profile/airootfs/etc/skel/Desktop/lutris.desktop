@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Lutris
+Exec=lutris %U
+Icon=lutris
+Terminal=false
+Categories=Game;

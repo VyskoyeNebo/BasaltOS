@@ -28,6 +28,9 @@ iso="${images[0]}"
 if [[ "$milestone" == m2 || "$milestone" == m3 ]] && (( $(stat -c %s "$iso") >= 4000000000 )); then
     echo "$milestone ISO exceeds the 4 GB target." >&2; exit 1
 fi
+if [[ "$milestone" == m4 ]] && (( $(stat -c %s "$iso") >= 8000000000 )); then
+    echo 'M4 ISO exceeds the 8 GB target.' >&2; exit 1
+fi
 python - "$iso" <<'PY'
 from pathlib import Path
 import sys
