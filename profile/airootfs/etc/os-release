@@ -1,5 +1,5 @@
 NAME="BasaltOS"
-PRETTY_NAME="BasaltOS M1"
+PRETTY_NAME="BasaltOS M2"
 ID=basaltos
 ID_LIKE=arch
 BUILD_ID=rolling

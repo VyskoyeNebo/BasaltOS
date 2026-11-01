@@ -3,7 +3,7 @@
 iso_name="basaltos"
 iso_label="basaltos"
 iso_publisher="BasaltOS"
-iso_application="BasaltOS M1 Command Line Live ISO"
+iso_application="BasaltOS M2 KDE Plasma Live ISO"
 iso_version="$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y.%m.%d)"
 install_dir="basalt"
 bootmodes=('bios.syslinux' 'uefi.systemd-boot')

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=BasaltOS wallpaper
+Exec=/usr/bin/plasma-apply-wallpaperimage /usr/share/backgrounds/basaltos/m2.svg
+TryExec=/usr/bin/plasma-apply-wallpaperimage
+OnlyShowIn=KDE;
+X-KDE-autostart-phase=2
+StartupNotify=false
