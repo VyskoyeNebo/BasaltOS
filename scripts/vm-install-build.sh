@@ -37,4 +37,4 @@ for artifact in /mnt/root/BasaltOS/out/*; do
     curl -f --retry 3 -T "$artifact" "$bridge/out/$(basename "$artifact")"
 done
 echo '=== BUILD_AND_EXPORT_OK ==='
-arch-chroot /mnt bash /root/BasaltOS/scripts/verify-qemu.sh
+arch-chroot /mnt bash /root/BasaltOS/scripts/start-qemu-check.sh

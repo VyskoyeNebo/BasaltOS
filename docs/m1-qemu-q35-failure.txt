@@ -1,0 +1,2 @@
+[    0.000000] ..MP-BIOS bug: 8254 timer not connected to IO-APIC
+[    0.001000] Kernel panic - not syncing: IO-APIC + timer doesn'

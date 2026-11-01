@@ -142,10 +142,6 @@ for relative in (
     remove(relative)
 for path in (profile / 'efiboot/loader/entries').glob('*memtest*'):
     remove(path.relative_to(profile).as_posix())
-write('airootfs/etc/systemd/system/serial-getty@ttyS0.service.d/autologin.conf', '''[Service]
-ExecStart=
-ExecStart=-/usr/bin/agetty --autologin root --noclear --keep-baud 115200,38400,9600 - $TERM
-''')
 write('syslinux/archiso_head.cfg', '''SERIAL 0 115200
 UI menu.c32
 MENU TITLE BasaltOS
@@ -155,7 +151,7 @@ write('syslinux/archiso_sys-linux.cfg', '''LABEL basaltos
 MENU LABEL BasaltOS
 LINUX /%INSTALL_DIR%/boot/%ARCH%/vmlinuz-linux
 INITRD /%INSTALL_DIR%/boot/%ARCH%/initramfs-linux.img
-APPEND archisobasedir=%INSTALL_DIR% archisosearchuuid=%ARCHISO_UUID% console=ttyS0,115200 console=tty0 %KERNEL_PARAMS%
+APPEND archisobasedir=%INSTALL_DIR% archisosearchuuid=%ARCHISO_UUID% %KERNEL_PARAMS%
 ''')
 write('syslinux/archiso_sys.cfg', '''INCLUDE archiso_head.cfg
 DEFAULT basaltos
@@ -171,7 +167,7 @@ write('efiboot/loader/entries/01-archiso-linux.conf', '''title    BasaltOS
 sort-key 01
 linux    /%INSTALL_DIR%/boot/%ARCH%/vmlinuz-linux
 initrd   /%INSTALL_DIR%/boot/%ARCH%/initramfs-linux.img
-options  archisobasedir=%INSTALL_DIR% archisosearchuuid=%ARCHISO_UUID% console=ttyS0,115200 console=tty0 %KERNEL_PARAMS%
+options  archisobasedir=%INSTALL_DIR% archisosearchuuid=%ARCHISO_UUID% %KERNEL_PARAMS%
 ''')
 write('efiboot/loader/loader.conf', 'default 01-archiso-linux.conf\ntimeout 3\nconsole-mode keep\n')
 # Keep upstream GRUB templates for loopback booting, with BasaltOS branding.

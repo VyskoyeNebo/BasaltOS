@@ -1,0 +1,21 @@
+[    0.001000] ..MP-BIOS bug: 8254 timer not connected to IO-APIC
+[    0.006000] Kernel panic - not syncing: IO-APIC + timer doesn't work!  Boot with apic=debug and send a report.  Then try booting with the 'noapic' option.
+[    0.006000] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.2.11-arch1-1 #1 PREEMPT(full)  1e38049adb503fbd3a6552a982bd2d91fe8786ca
+[    0.006000] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.17.0-2-2 04/01/2014
+[    0.006000] Call Trace:
+[    0.006000]  <TASK>
+[    0.006000]  dump_stack_lvl+0x5d/0x80
+[    0.006000]  vpanic+0x20a/0x410
+[    0.006000]  panic+0x6b/0x70
+[    0.006000]  setup_IO_APIC+0x79f/0x7e0
+[    0.006000]  ? _raw_spin_unlock_irqrestore+0x1d/0x40
+[    0.006000]  ? clear_IO_APIC_pin+0x12c/0x1f0
+[    0.006000]  ? ioapic_read_entry+0x3d/0x50
+[    0.006000]  apic_intr_mode_init+0xcc/0xe0
+[    0.006000]  x86_late_time_init+0x2d/0x50
+[    0.006000]  start_kernel+0x9d4/0xa80
+[    0.006000]  x86_64_start_reservations+0x24/0x30
+[    0.006000]  x86_64_start_kernel+0xda/0xe0
+[    0.006000]  common_startup_64+0x13e/0x151
+[    0.006000]  </TASK>
+[    0.006000] ---[ end Kernel panic - not syncing: IO-APIC + timer doesn't work!  Boot with apic=debug and send a report.  Then try booting with the 'noapic' option. ]---

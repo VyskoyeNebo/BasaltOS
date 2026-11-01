@@ -3,7 +3,7 @@
 ## 目标与目录
 
 只构建 x86_64 命令行 Live ISO，不包含图形桌面或输入法。
-配置基于官方 archiso 92-1 的 releng；保留 BIOS/SYSLINUX、UEFI/systemd-boot。
+配置基于[官方 archiso](https://gitlab.archlinux.org/archlinux/archiso) 92-1 的 releng；保留 BIOS/SYSLINUX、UEFI/systemd-boot。
 
 ```text
 E:\BasaltOS\
@@ -119,6 +119,7 @@ $vbox = 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe'
 & $vbox storageattach BasaltOS-M1-builder --storagectl SATA --port 1 --device 0 `
   --type dvddrive --medium E:\BasaltOS\work\downloads\archlinux-x86_64.iso
 & $vbox modifyvm BasaltOS-M1-builder --boot1 dvd --boot2 disk --boot3 none --boot4 none
+& $vbox modifyvm BasaltOS-M1-builder --natpf1 "basalt-qmp,tcp,127.0.0.1,4444,,4444"
 & $vbox startvm BasaltOS-M1-builder --type headless
 ```
 
@@ -154,6 +155,9 @@ bash scripts/setup-builder.sh
 bash scripts/build.sh
 ```
 
+本次构建使用官方 Live ISO 启动后 chroot 到磁盘系统。若以后希望直接从构建机磁盘启动，
+先在 Live 中用 `arch-chroot /mnt passwd` 设置该构建机的 root 密码，再卸下安装介质并从磁盘启动。
+
 `build.sh` 在 Linux ext4 上创建新的工作目录、恢复 profile 链接，然后执行：
 
 ```bash
@@ -171,56 +175,92 @@ done
 
 ## QEMU 启动与验收
 
-Windows PowerShell，已安装 QEMU 且启用 Windows Hypervisor Platform 后：
+Windows PowerShell，已安装 QEMU 且启用 Windows Hypervisor Platform 后，使用
+[`-accel whpx`](https://www.qemu.org/docs/master/system/invocation.html)：
 
 ```powershell
 Set-Location E:\BasaltOS
 $iso = (Get-ChildItem .\out\basaltos-*.iso | Sort-Object LastWriteTime -Descending | Select-Object -First 1).FullName
-qemu-system-x86_64 -accel whpx -m 2048 -smp 2 -boot d -cdrom "$iso" `
+qemu-system-x86_64 -machine q35 -accel whpx -m 2048 -smp 2 -boot d -cdrom "$iso" `
   -netdev user,id=net0 -device virtio-net-pci,netdev=net0
 ```
 
 Linux，有 KVM 权限时：
 
 ```bash
-qemu-system-x86_64 -enable-kvm -cpu host -m 2048 -smp 2 -boot d \
+qemu-system-x86_64 -machine q35 -enable-kvm -cpu host -m 2048 -smp 2 -boot d \
   -cdrom out/basaltos-2026.11.01-x86_64.iso \
   -netdev user,id=net0 -device virtio-net-pci,netdev=net0
 ```
 
 以上均从 ISO 的 BIOS 引导路径进入 root shell。UEFI 可加对应 QEMU/OVMF 的
 pflash 固件参数；默认命令不启用 Secure Boot。
-无硬件加速时可把加速参数换为 `-accel tcg -cpu max`，启动较慢。
+本次嵌套虚拟机环境使用的 TCG 参数如下，启动较慢：
+
+```bash
+qemu-system-x86_64 -machine q35 -accel tcg,thread=single \
+  -icount shift=auto,sleep=on -rtc clock=vm -cpu qemu64 -m 2048 -smp 1 -boot d \
+  -cdrom out/basaltos-2026.11.01-x86_64.iso \
+  -netdev user,id=net0 -device virtio-net-pci,netdev=net0
+```
+
+`-icount` 仅用于 TCG；不要附加到 WHPX/KVM 命令。
 
 进入 Live shell 后执行：
 
 ```bash
-hostname                 # basaltos
+cat /proc/sys/kernel/hostname  # basaltos
 id -u                    # 0
 ip a                     # 有非 loopback 的 IPv4 地址
 ping -c 3 mirrors.tuna.tsinghua.edu.cn
+curl -fsSI https://mirrors.tuna.tsinghua.edu.cn/archlinux/
 cat /etc/locale.conf     # LANG=zh_CN.UTF-8
 locale -a                # 包含 zh_CN.utf8
 readlink /etc/localtime  # /usr/share/zoneinfo/Asia/Shanghai
 cat /etc/vconsole.conf   # KEYMAP=us
 ```
 
-本项目的自动验收使用 QEMU TCG、真实串口交互和 QMP VGA 屏幕截图：
+本次验收使用 QEMU TCG、真实 VGA 虚拟键盘和 QMP 屏幕截图。
+安装脚本在构建后启动 QEMU；重复验收可在 Arch 构建机内执行：
 
 ```bash
-# 在 Arch 构建虚拟机内运行；宿主传输服务须仍在运行。
 cd /root/BasaltOS
-bash scripts/verify-qemu.sh
+bash scripts/start-qemu-check.sh
 ```
 
-输出回传到 `out/m1-qemu.png`、`out/m1-qemu-serial.txt`、
-`out/m1-qemu-result.json`。宿主保存最终证据：
+该脚本保持运行，直到通过 QMP 退出 QEMU；这样可避免 arch-chroot 的 PID 命名空间
+在入口退出时清理 QEMU 进程。请在宿主另一个终端进行下列控制。
+
+宿主 Windows 的 QMP 控制命令如下。仅使用专用虚拟机的 localhost 端口转发，
+不要将 QMP 暴露到公网。先截图观察，确认进入 root shell 后再输入验收命令：
 
 ```powershell
+Set-Location E:\BasaltOS
+$env:VBOX_USER_HOME = 'E:\BasaltOS\work\vbox-config'
+$vbox = 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe'
+# 之前创建虚拟机时已配置转发；现有运行中的 VM 如尚未配置，可执行一次：
+# & $vbox controlvm BasaltOS-M1-builder natpf1 'basalt-qmp,tcp,127.0.0.1,4444,,4444'
+python scripts/qemu-console.py status
+python scripts/qemu-console.py snapshot
+& $vbox guestcontrol BasaltOS-M1-builder run --username root --exe /usr/bin/curl `
+  --wait-stdout --wait-stderr -- -f -T /mnt/root/BasaltOS/out/m1-qemu.png `
+  http://10.0.2.2:8181/out/m1-qemu.png
+# 查看 out/m1-qemu.png；TCG 启动可能需要数分钟，直到出现 root shell。
+python scripts/qemu-console.py type --text 'export LC_ALL=C; clear; printf hostname=; cat /proc/sys/kernel/hostname; id; ip -br a; ping -c 3 mirrors.tuna.tsinghua.edu.cn'
+# 等待 ping 完成后截图并回传：
+python scripts/qemu-console.py snapshot
+& $vbox guestcontrol BasaltOS-M1-builder run --username root --exe /usr/bin/curl `
+  --wait-stdout --wait-stderr -- -f -T /mnt/root/BasaltOS/out/m1-qemu.png `
+  http://10.0.2.2:8181/out/m1-qemu.png
 Copy-Item out\m1-qemu.png docs\m1-qemu.png
-Copy-Item out\m1-qemu-serial.txt docs\m1-qemu-serial.txt
-Copy-Item out\m1-qemu-result.json docs\m1-qemu-result.json
+# 可继续输入前述 locale/时区/HTTPS 检查命令，并分别截图保存。
+# 完成后退出 QEMU：
+python scripts/qemu-console.py quit
 ```
+
+`qemu-console.py` 只通过 QMP 发送真实键盘事件和截取 VGA 画面，不合成终端输出。
+`LC_ALL=C` 仅用于该验收 shell 的可读输出，不修改 Live ISO 的默认中文 locale。
+ISO 默认使用官方 releng 的 VGA 控制台登录方式，没有附加串口登录要求。
 
 ISO 路径格式：`E:\BasaltOS\out\basaltos-YYYY.MM.DD-x86_64.iso`。
 同目录保存 `.iso.sha256`、`build.log` 和 `archiso-version.txt`。

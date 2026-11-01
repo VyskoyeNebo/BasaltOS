@@ -4,6 +4,7 @@
 当前仅实现 M1：可启动的 x86_64 命令行 Live ISO，BIOS 和 UEFI 启动配置。
 
 - 构建与启动：[`docs/BUILD.md`](docs/BUILD.md)
+- M1 验收结果：[`docs/M1-RESULTS.md`](docs/M1-RESULTS.md)
 - 环境故障与备用路径：[`docs/ENV-NOTES.md`](docs/ENV-NOTES.md)
 - 上游 releng 来源：[`docs/UPSTREAM.md`](docs/UPSTREAM.md)
 - archiso 配置：`profile/`
