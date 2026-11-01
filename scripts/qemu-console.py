@@ -17,6 +17,7 @@ parser.add_argument('--x', type=int)
 parser.add_argument('--y', type=int)
 parser.add_argument('--width', type=int, default=1280)
 parser.add_argument('--height', type=int, default=800)
+parser.add_argument('--double', action='store_true', help='Double-click for desktop launchers')
 args = parser.parse_args()
 connection = socket.create_connection((args.host, args.port), timeout=10)
 stream = connection.makefile('rwb', buffering=0)
@@ -59,9 +60,11 @@ elif args.action == 'click':
               for axis, value in [('x', round(args.x * 32767 / (args.width - 1))),
                                   ('y', round(args.y * 32767 / (args.height - 1)))]]
     command('input-send-event', {'events': events})
-    command('input-send-event', {'events': [{'type': 'btn', 'data': {'button': 'left', 'down': True}}]})
-    time.sleep(0.12)
-    command('input-send-event', {'events': [{'type': 'btn', 'data': {'button': 'left', 'down': False}}]})
+    for _ in range(2 if args.double else 1):
+        command('input-send-event', {'events': [{'type': 'btn', 'data': {'button': 'left', 'down': True}}]})
+        time.sleep(0.08)
+        command('input-send-event', {'events': [{'type': 'btn', 'data': {'button': 'left', 'down': False}}]})
+        time.sleep(0.08)
 elif args.action == 'key':
     if not args.key:
         parser.error('key requires --key')

@@ -2,13 +2,21 @@
 # Run inside the mounted target, after Calamares users/fstab or the test installer.
 set -euo pipefail
 [[ "$(findmnt -nro FSTYPE /)" == btrfs ]] || { echo 'Target root must be btrfs.' >&2; exit 1; }
+if [[ ! -s /etc/hostname || -z "$(tr -d '[:space:]' < /etc/hostname)" ]]; then
+    echo basaltos > /etc/hostname
+fi
 root_device="$(findmnt -nro SOURCE /)"
 root_device="${root_device%%\[*}"
 root_device="$(readlink -f "$root_device")"
 root_type="$(lsblk -dnro TYPE "$root_device")"
 kernel_params='rootflags=subvol=@ rw'
 if [[ "$root_type" == crypt ]]; then
-    parent="$(lsblk -dnro PKNAME "$root_device")"
+    # lsblk --nodeps can leave PKNAME empty for dm-crypt. Read the actual slave.
+    shopt -s nullglob
+    parents=(/sys/class/block/"${root_device##*/}"/slaves/*)
+    (( ${#parents[@]} == 1 )) || { echo 'Expected one LUKS backing partition.' >&2; exit 1; }
+    parent="${parents[0]##*/}"
+    [[ -b "/dev/$parent" ]] || { echo 'LUKS backing device is missing.' >&2; exit 1; }
     luks_uuid="$(cryptsetup luksUUID "/dev/$parent")"
     mapper="$(dmsetup info -c --noheadings -o name "$root_device" | xargs)"
     printf '%s UUID=%s none luks\n' "$mapper" "$luks_uuid" > /etc/crypttab

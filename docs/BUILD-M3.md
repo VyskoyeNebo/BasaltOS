@@ -68,6 +68,7 @@ Calamares 采用离线解包 Live squashfs 的方式安装同一套系统与内�
 其余空间为 btrfs；勾选加密后 btrfs 位于 LUKS2 容器内。
 ESP 与 `/boot` 保留明文，系统文件及 `/home` 加密。没有配置休眠或 swap 文件。
 普通安装也可不勾选加密。
+M3 提供自动擦除布局；手动分区、保留数据安装和双系统安装留待后续阶段。
 
 btrfs 子卷包括 `@`、`@home`、`@cache`、`@log`；挂载启用 zstd 压缩。
 根目录与 home 分别配置 Snapper，生成安装初始快照并启用 timeline/cleanup timers。

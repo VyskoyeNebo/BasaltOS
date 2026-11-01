@@ -7,6 +7,8 @@ windowSize: 1000px,680px
 windowPlacement: center
 sidebar: widget
 navigation: widget
+slideshow: show.qml
+slideshowAPI: 2
 strings:
   productName: BasaltOS
   shortProductName: BasaltOS

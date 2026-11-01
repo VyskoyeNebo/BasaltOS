@@ -86,7 +86,7 @@ availableFileSystemTypes: [ btrfs ]
 enableLuksAutomatedPartitioning: true
 preCheckEncryption: false
 luksGeneration: luks2
-allowManualPartitioning: true
+allowManualPartitioning: false
 showNotEncryptedBootMessage: true
 lvm:
   enable: false
@@ -142,7 +142,7 @@ user:
 hostname:
   location: EtcFile
   writeHostsFile: true
-  template: basaltos
+  template: "${host}"
 allowActiveDirectory: false
 ''',
 'shellprocess': '''dontChroot: false
@@ -179,6 +179,8 @@ windowSize: 1000px,680px
 windowPlacement: center
 sidebar: widget
 navigation: widget
+slideshow: show.qml
+slideshowAPI: 2
 strings:
   productName: BasaltOS
   shortProductName: BasaltOS
@@ -196,6 +198,21 @@ style:
   SidebarText: "#232629"
   SidebarTextCurrent: "#ffffff"
   SidebarBackgroundCurrent: "#3daee9"
+''')
+write('airootfs/usr/share/calamares/branding/basaltos/show.qml', '''import QtQuick 2.15
+import calamares.slideshow 1.0
+
+Presentation {
+    function onActivate() { currentSlide = 0 }
+    function onLeave() {}
+    Slide {
+        Image {
+            anchors.fill: parent
+            source: "file:///usr/share/wallpapers/Next/contents/images/5120x2880.png"
+            fillMode: Image.PreserveAspectCrop
+        }
+    }
+}
 ''')
 desktop = '''[Desktop Entry]
 Type=Application
