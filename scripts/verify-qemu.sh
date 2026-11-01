@@ -6,6 +6,7 @@ test -n "$iso"
 runtime_dir="$(mktemp -d /tmp/basaltos-qemu.XXXXXXXX)"
 trap 'if [[ -f "$runtime_dir/qemu.pid" ]]; then kill "$(cat "$runtime_dir/qemu.pid")" 2>/dev/null || true; fi' EXIT
 qemu-system-x86_64 --version | head -n 1
+sysctl -w 'net.ipv4.ping_group_range=0 2147483647'
 # Nested hardware acceleration is unavailable on this builder; TCG performs the actual boot test.
 qemu-system-x86_64 -accel tcg -cpu max -m 2048 -smp 2 \
     -cdrom "$iso" -boot d -display none -vga std \

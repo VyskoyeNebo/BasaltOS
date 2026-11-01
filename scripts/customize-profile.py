@@ -12,6 +12,8 @@ links = json.loads(manifest.read_text())
 def write(relative, content):
     path = profile / relative
     path.parent.mkdir(parents=True, exist_ok=True)
+    if path.is_symlink():
+        path.unlink()
     path.write_text(content, encoding='utf-8', newline='\n')
 
 def remove(relative):

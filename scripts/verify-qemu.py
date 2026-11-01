@@ -54,7 +54,7 @@ def wait_for(pattern, timeout=600):
 
 wait_for(rb'root@basaltos[^\r\n]*#')
 print('QEMU reached root@basaltos shell', flush=True)
-check = "test \"$(hostname)\" = basaltos && test \"$(id -u)\" = 0 && ip -4 -o a show scope global | grep -q inet && ping -c 3 -W 5 mirrors.tuna.tsinghua.edu.cn && test \"$(cat /etc/locale.conf)\" = LANG=zh_CN.UTF-8 && test \"$(readlink /etc/localtime)\" = /usr/share/zoneinfo/Asia/Shanghai && locale -a | grep -qi zh_CN.utf8"
+check = "test \"$(hostname)\" = basaltos && test \"$(id -u)\" = 0 && ip -4 -o a show scope global | grep -q inet && ping -c 3 -W 5 mirrors.tuna.tsinghua.edu.cn && test \"$(cat /etc/locale.conf)\" = LANG=zh_CN.UTF-8 && test \"$(readlink /etc/localtime)\" = /usr/share/zoneinfo/Asia/Shanghai && locale -a | grep -qi zh_CN.utf8 && grep -qx KEYMAP=us /etc/vconsole.conf && grep -q mirrors.tuna.tsinghua.edu.cn /etc/pacman.conf"
 serial.sendall(("LC_ALL=C bash -c '" + check + "'; printf '\\nM1_RESULT=%s\\n' \"$?\"\n").encode())
 wait_for(rb'\r?\nM1_RESULT=\d+\r?\n', 120)
 result = re.search(rb'\r?\nM1_RESULT=(\d+)\r?\n', transcript)
@@ -63,10 +63,15 @@ if result.group(1) != b'0':
 print('QEMU guest hostname/root/address/ping/locale/timezone checks passed', flush=True)
 
 # Type into the real VGA tty1 root shell so the screenshot shows a genuine command and prompt.
-keycodes = {' ': 'spc', ';': 'semicolon', '-': 'minus', '.': 'dot', '\n': 'ret'}
-text = 'clear; hostname; id; ip -br a; ping -c 3 mirrors.tuna.tsinghua.edu.cn\n'
+keycodes = {' ': 'spc', ';': 'semicolon', '-': 'minus', '.': 'dot', '\n': 'ret', '=': 'equal'}
+text = 'export LC_ALL=C; clear; hostname; id; ip -br a; ping -c 3 mirrors.tuna.tsinghua.edu.cn\n'
 for character in text:
-    command('send-key', {'keys': [{'type': 'qcode', 'data': keycodes.get(character, character)}], 'hold-time': 20})
+    codes = [keycodes.get(character, character)]
+    if character.isupper():
+        codes = ['shift', character.lower()]
+    elif character == '_':
+        codes = ['shift', 'minus']
+    command('send-key', {'keys': [{'type': 'qcode', 'data': code} for code in codes], 'hold-time': 20})
     time.sleep(0.05)
 time.sleep(8)
 ppm = runtime / 'screen.ppm'
@@ -93,7 +98,8 @@ png += chunk(b'IDAT', zlib.compress(scanlines)) + chunk(b'IEND', b'')
     'passed': True, 'accelerator': 'tcg', 'boot': 'BIOS ISO',
     'hostname': 'basaltos', 'uid': 0, 'ipv4': True,
     'ping': 'mirrors.tuna.tsinghua.edu.cn', 'locale': 'zh_CN.UTF-8',
-    'timezone': 'Asia/Shanghai', 'screenshot': 'docs/m1-qemu.png',
+    'timezone': 'Asia/Shanghai', 'keymap': 'us', 'mirror': 'TUNA',
+    'screenshot': 'docs/m1-qemu.png',
 }, indent=2) + '\n')
 print(f'QMP VGA screenshot saved: {width}x{height}', flush=True)
 command('quit')
