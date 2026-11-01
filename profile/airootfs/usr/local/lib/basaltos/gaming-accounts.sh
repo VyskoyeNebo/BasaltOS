@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 if [[ -d /run/archiso/bootmnt ]]; then
+  # releng's 256 MiB writable layer is too small for Steam's first update.
+  # Change only the Live tmpfs limit; memory is allocated as data is written.
+  if mountpoint -q /run/archiso/cowspace; then
+    [[ "$(findmnt -nro FSTYPE /run/archiso/cowspace)" == tmpfs ]] || exit 1
+    mount -o remount,size=50% /run/archiso/cowspace
+  fi
   if ! id gamer >/dev/null 2>&1; then
     groups=()
     for group in wheel video audio network storage input render gamemode; do

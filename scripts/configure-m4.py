@@ -25,7 +25,7 @@ packages = (profile / 'packages.x86_64').read_text().splitlines()
 packages += '''steam steam-devices lutris gamescope mangohud lib32-mangohud
 gamemode lib32-gamemode vulkan-icd-loader lib32-vulkan-icd-loader mesa lib32-mesa
 vulkan-radeon lib32-vulkan-radeon vulkan-intel lib32-vulkan-intel
-vulkan-swrast lib32-vulkan-swrast wine-staging winetricks vulkan-tools mesa-utils'''.split()
+vulkan-swrast lib32-vulkan-swrast wine-staging winetricks vulkan-tools mesa-utils python-protobuf'''.split()
 write('packages.x86_64', '\n'.join(dict.fromkeys(p for p in packages if p))+'\n')
 
 write('airootfs/etc/skel/.config/MangoHud/MangoHud.conf', '''# BasaltOS gaming defaults; unsupported sensors may be unavailable in VMs.
@@ -47,7 +47,7 @@ toggle_hud=Shift_R+F12
 
 for name, icon, command, title in (
     ('steam', 'steam', 'steam %U', 'Steam'),
-    ('lutris', 'lutris', 'lutris %U', 'Lutris'),
+    ('lutris', 'net.lutris.Lutris', 'lutris %U', 'Lutris'),
 ):
     entry = f'''[Desktop Entry]
 Type=Application
@@ -77,6 +77,12 @@ write(relative, target)
 write('airootfs/usr/local/lib/basaltos/gaming-accounts.sh', '''#!/usr/bin/env bash
 set -euo pipefail
 if [[ -d /run/archiso/bootmnt ]]; then
+  # releng's 256 MiB writable layer is too small for Steam's first update.
+  # Change only the Live tmpfs limit; memory is allocated as data is written.
+  if mountpoint -q /run/archiso/cowspace; then
+    [[ "$(findmnt -nro FSTYPE /run/archiso/cowspace)" == tmpfs ]] || exit 1
+    mount -o remount,size=50% /run/archiso/cowspace
+  fi
   if ! id gamer >/dev/null 2>&1; then
     groups=()
     for group in wheel video audio network storage input render gamemode; do

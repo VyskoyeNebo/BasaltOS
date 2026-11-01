@@ -2,6 +2,6 @@
 Type=Application
 Name=Lutris
 Exec=lutris %U
-Icon=lutris
+Icon=net.lutris.Lutris
 Terminal=false
 Categories=Game;

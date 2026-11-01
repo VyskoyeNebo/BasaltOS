@@ -78,13 +78,19 @@ elif args.action == 'key':
 else:
     if args.text is None:
         parser.error('type requires --text')
-    plain = {' ': 'spc', ';': 'semicolon', '-': 'minus', '.': 'dot', '\n': 'ret',
+    plain = {' ': 'spc', ';': 'semicolon', '-': 'minus', '.': 'dot', '\n': 'ret', '\t': 'tab',
              '=': 'equal', '/': 'slash', "'": 'apostrophe', '[': 'bracket_left',
              ']': 'bracket_right', '\\': 'backslash', ',': 'comma', '`': 'grave_accent'}
     shifted = {'_': 'minus', ':': 'semicolon', '>': 'dot', '<': 'comma', '?': 'slash',
                '"': 'apostrophe', '$': '4', '&': '7', '|': 'backslash', '!': '1',
-               '(': '9', ')': '0', '%': '5', '+': 'equal', '*': '8', '#': '3', '@': '2'}
-    for character in args.text+('' if args.no_enter else '\n'):
+               '(': '9', ')': '0', '%': '5', '+': 'equal', '*': '8', '#': '3', '@': '2',
+               '^': '6', '{': 'bracket_left', '}': 'bracket_right', '~': 'grave_accent'}
+    content = args.text+('' if args.no_enter else '\n')
+    unsupported = next((c for c in content if not (c in plain or c in shifted or
+                       (c.isascii() and c.isalnum()))), None)
+    if unsupported is not None:
+        parser.error(f'Unsupported US keyboard character: {unsupported!r}; nothing typed')
+    for character in content:
         if character.isupper():
             keys = ['shift', character.lower()]
         elif character in shifted:
