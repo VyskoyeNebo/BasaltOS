@@ -1,0 +1,8 @@
+#!/bin/bash
+export LANG=zh_CN.UTF-8
+export LC_MESSAGES=zh_CN.UTF-8
+export QT_QPA_PLATFORM=xcb
+if (( EUID == 0 )); then
+    exec calamares -D6
+fi
+exec pkexec --disable-internal-agent /usr/bin/env DISPLAY="$DISPLAY" XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}" LANG="$LANG" QT_QPA_PLATFORM=xcb calamares -D6

@@ -6,13 +6,17 @@ import socket
 import time
 
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('action', choices=['status', 'snapshot', 'type', 'key', 'quit'])
+parser.add_argument('action', choices=['status', 'snapshot', 'type', 'key', 'click', 'reset', 'powerdown', 'quit'])
 parser.add_argument('--host', default='127.0.0.1')
 parser.add_argument('--port', type=int, default=4444)
 parser.add_argument('--filename', default='/root/BasaltOS/out/m1-qemu.png')
 parser.add_argument('--text')
 parser.add_argument('--key', help='QEMU key chord, for example ctrl-alt-t or ctrl-spc')
 parser.add_argument('--no-enter', action='store_true')
+parser.add_argument('--x', type=int)
+parser.add_argument('--y', type=int)
+parser.add_argument('--width', type=int, default=1280)
+parser.add_argument('--height', type=int, default=800)
 args = parser.parse_args()
 connection = socket.create_connection((args.host, args.port), timeout=10)
 stream = connection.makefile('rwb', buffering=0)
@@ -46,6 +50,18 @@ elif args.action == 'snapshot':
     print(f'Real VGA screenshot saved in QEMU host filesystem: {args.filename}')
 elif args.action == 'quit':
     command('quit')
+elif args.action in ('reset', 'powerdown'):
+    command('system_reset' if args.action == 'reset' else 'system_powerdown')
+elif args.action == 'click':
+    if args.x is None or args.y is None or not (0 <= args.x < args.width and 0 <= args.y < args.height):
+        parser.error('click requires valid --x/--y and screenshot dimensions')
+    events = [{'type': 'abs', 'data': {'axis': axis, 'value': value}}
+              for axis, value in [('x', round(args.x * 32767 / (args.width - 1))),
+                                  ('y', round(args.y * 32767 / (args.height - 1)))]]
+    command('input-send-event', {'events': events})
+    command('input-send-event', {'events': [{'type': 'btn', 'data': {'button': 'left', 'down': True}}]})
+    time.sleep(0.12)
+    command('input-send-event', {'events': [{'type': 'btn', 'data': {'button': 'left', 'down': False}}]})
 elif args.action == 'key':
     if not args.key:
         parser.error('key requires --key')

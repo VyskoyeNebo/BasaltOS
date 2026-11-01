@@ -1,0 +1,26 @@
+---
+componentName: basaltos
+welcomeStyleCalamares: false
+welcomeExpandingLogo: false
+windowExpanding: normal
+windowSize: 1000px,680px
+windowPlacement: center
+sidebar: widget
+navigation: widget
+strings:
+  productName: BasaltOS
+  shortProductName: BasaltOS
+  version: M3
+  shortVersion: M3
+  versionedName: BasaltOS M3
+  shortVersionedName: BasaltOS M3
+  bootloaderEntryName: BasaltOS
+images:
+  productIcon: /usr/share/icons/breeze/devices/64/computer.svg
+  productLogo: /usr/share/icons/breeze/devices/64/computer.svg
+  productWelcome: /usr/share/wallpapers/Next/contents/images/5120x2880.png
+style:
+  SidebarBackground: "#eff0f1"
+  SidebarText: "#232629"
+  SidebarTextCurrent: "#ffffff"
+  SidebarBackgroundCurrent: "#3daee9"

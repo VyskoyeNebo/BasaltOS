@@ -1,0 +1,27 @@
+# BasaltOS local package; upstream orig archive mirrored by TUNA Debian.
+pkgname=calamares
+pkgver=3.4.3
+pkgrel=1
+pkgdesc='Distribution-independent graphical installer framework'
+arch=('x86_64')
+url='https://codeberg.org/Calamares/calamares'
+license=('GPL-3.0-or-later')
+depends=(python python-yaml yaml-cpp qt6-base qt6-svg qt6-declarative
+         kcoreaddons kconfig ki18n kwidgetsaddons kpmcore libpwquality
+         polkit-qt6 boost-libs parted cryptsetup rsync squashfs-tools)
+makedepends=(cmake ninja extra-cmake-modules qt6-tools boost)
+source=("calamares-${pkgver}.tar.xz::https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/c/calamares/calamares_${pkgver}.orig.tar.xz")
+sha256sums=('b62832265be9e1b80ab4a0851f28cae28ef6808ae6c4969c5ac0369f748f0c29')
+build() {
+  # Bundled pybind11 2.11 predates Python 3.14; use Arch's Boost.Python.
+  cmake -S "calamares-${pkgver}" -B build -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib -DINSTALL_CONFIG=ON \
+    -DWITH_QT6=ON -DWITH_PYBIND11=OFF -DBUILD_TESTING=OFF \
+    -DBUILD_SCHEMA_TESTING=OFF -DBUILD_CRASH_REPORTING=OFF \
+    -DSKIP_MODULES='interactiveterminal;localeq;welcomeq;usersq;finishedq;packagechooserq;plasmalnf;webview;webviewq'
+  cmake --build build --parallel 6
+}
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+}

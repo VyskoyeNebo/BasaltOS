@@ -1,0 +1,5 @@
+[General]
+ColorScheme=BreezeLight
+
+[KDE]
+LookAndFeelPackage=org.kde.breeze.desktop

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Install BasaltOS
+Name[zh_CN]=安装 BasaltOS
+Comment=Install BasaltOS to a disk
+Comment[zh_CN]=将 BasaltOS 安装到硬盘
+Exec=/usr/local/bin/install-basaltos
+Icon=system-software-install
+Terminal=false
+Categories=System;

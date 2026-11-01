@@ -12,6 +12,10 @@ case "$(stat -f -c %T "$build_root")" in
 esac
 run_dir="$(mktemp -d "${build_root}/${milestone}.XXXXXXXX")"
 python "$project_dir/scripts/stage-profile.py" "$run_dir/profile"
+if [[ -n "${BASALT_LOCAL_REPO:-}" ]]; then
+    [[ -f "$BASALT_LOCAL_REPO/basaltos-local.db" ]] || { echo 'Local package repository is missing.' >&2; exit 1; }
+    printf '\n[basaltos-local]\nSigLevel = Optional TrustAll\nServer = file://%s\n' "$BASALT_LOCAL_REPO" >> "$run_dir/profile/pacman.conf"
+fi
 echo "Build workspace: $run_dir"
 pacman -Q archiso | tee "$out_dir/archiso-version.txt"
 touch "$run_dir/build-start"
@@ -21,8 +25,8 @@ mapfile -t images < <(find "$out_dir" -maxdepth 1 -name 'basaltos-*.iso' -type f
 (( ${#images[@]} == 1 )) || { echo 'Expected one newly built ISO.' >&2; exit 1; }
 iso="${images[0]}"
 (( $(stat -c %s "$iso") > 500000000 )) || { echo 'ISO is below the M1 size threshold.' >&2; exit 1; }
-if [[ "$milestone" == m2 ]] && (( $(stat -c %s "$iso") >= 4000000000 )); then
-    echo 'M2 ISO exceeds the 4 GB target.' >&2; exit 1
+if [[ "$milestone" == m2 || "$milestone" == m3 ]] && (( $(stat -c %s "$iso") >= 4000000000 )); then
+    echo "$milestone ISO exceeds the 4 GB target." >&2; exit 1
 fi
 python - "$iso" <<'PY'
 from pathlib import Path
