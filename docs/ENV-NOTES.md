@@ -1,5 +1,9 @@
 # M1 构建环境记录
 
+> M2 起，现有构建机已加入默认 VirtualBox 管理器，与其他虚拟机并列显示。
+> 后续命令不再使用下文历史记录中的 `work/vbox-config` 注册列表；磁盘仍在项目内。
+> 当前流程见 [BUILD-M2.md](BUILD-M2.md)。
+
 ## 2026-11-01，Windows 11，Asia/Shanghai
 
 - 项目目录：`E:\BasaltOS`，Git 仓库位于此目录。

@@ -104,7 +104,7 @@ curl.exe -fL -o work/downloads/sha256sums.txt `
 Get-FileHash work/downloads/archlinux-x86_64.iso -Algorithm SHA256
 Get-Content work/downloads/sha256sums.txt
 # 校验一致后创建虚拟机。以下创建命令只运行一次。
-$env:VBOX_USER_HOME = 'E:\BasaltOS\work\vbox-config'
+$env:VBOX_USER_HOME = $null
 $vbox = 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe'
 & $vbox createvm --name BasaltOS-M1-builder --ostype ArchLinux_64 `
   --basefolder E:\BasaltOS\work\vms --register
@@ -236,7 +236,7 @@ bash scripts/start-qemu-check.sh
 
 ```powershell
 Set-Location E:\BasaltOS
-$env:VBOX_USER_HOME = 'E:\BasaltOS\work\vbox-config'
+$env:VBOX_USER_HOME = $null
 $vbox = 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe'
 # 之前创建虚拟机时已配置转发；现有运行中的 VM 如尚未配置，可执行一次：
 # & $vbox controlvm BasaltOS-M1-builder natpf1 'basalt-qmp,tcp,127.0.0.1,4444,,4444'

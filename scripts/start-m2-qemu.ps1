@@ -1,5 +1,6 @@
 param(
     [ValidateSet('whpx','tcg')][string]$Accelerator = 'whpx',
+    [ValidateSet('sdl','none')][string]$Display = 'sdl',
     [string]$Iso,
     [int]$QmpPort = 4452
 )
@@ -13,7 +14,7 @@ if (-not $Iso) {
 if (-not $Iso -or -not (Test-Path -LiteralPath $Iso)) { throw 'No M2 ISO found.' }
 $qemuArgs = @('-L', (Join-Path $projectDir 'work\tools\msys2\ucrt64\share\qemu'),
     '-machine','q35','-m','6144','-boot','d','-cdrom',$Iso,
-    '-device','virtio-vga','-display','none',
+    '-device','virtio-vga','-display',$Display,
     '-device','qemu-xhci','-device','usb-tablet',
     '-netdev','user,id=net0','-device','virtio-net-pci,netdev=net0',
     '-qmp',"tcp:127.0.0.1:$QmpPort,server=on,wait=off",'-no-reboot')
@@ -23,7 +24,8 @@ if ($Accelerator -eq 'whpx') {
     $qemuArgs += @('-accel','tcg,thread=single','-icount','shift=auto,sleep=on','-rtc','clock=vm','-cpu','qemu64','-smp','1')
 }
 $logPrefix = Join-Path $projectDir "work\m2-qemu-$Accelerator"
-$qemuProcess = Start-Process -FilePath $qemuExe -ArgumentList $qemuArgs -WindowStyle Hidden `
+$windowStyle = if ($Display -eq 'none') { 'Hidden' } else { 'Normal' }
+$qemuProcess = Start-Process -FilePath $qemuExe -ArgumentList $qemuArgs -WindowStyle $windowStyle `
     -RedirectStandardError "$logPrefix.stderr.log" -RedirectStandardOutput "$logPrefix.stdout.log" -PassThru
 $qemuProcess.Id | Set-Content "$logPrefix.pid"
 Write-Output "QEMU PID $($qemuProcess.Id); accelerator=$Accelerator; QMP=127.0.0.1:$QmpPort"

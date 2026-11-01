@@ -7,24 +7,35 @@ M1 的 hostname、locale、时区、键盘和 pacman 清华源配置保持不变
 ## 配置与账号
 
 - 桌面为 Plasma Wayland；精简入口包 `plasma-desktop`，配套 SDDM、Konsole、Dolphin、Ark。
-- SDDM 使用项目自带 QML 登录主题；SDDM greeter 使用 X11，登录后的 Plasma 使用 Wayland。
+- SDDM 使用 KDE 官方 Breeze 登录主题，采用居中头像、账户与密码框的熟悉布局；greeter 使用 X11，登录后的 Plasma 使用 Wayland。
 - Live 登录账号：**root**，密码：**basaltos**。不自动跳过 SDDM，便于检查登录流程。
 - 保留 `dhcpcd`、`iwd`、`nano`；NetworkManager 主管有线与无线网络，使用 iwd 后端和 systemd-resolved DNS。
 - fcitx5 默认拼音，按 **Ctrl+Space** 切换中英文；安装 Qt/GTK 集成、CJK 和 Emoji 字体。
 - KWin 根据 `/root/.config/kwinrc` 启动 `fcitx5-wayland-launcher.desktop`；禁用 root 用户的重复 XDG autostart。
 - 只设置 `XMODIFIERS=@im=fcitx`，不全局强制 Qt/GTK IM 模块，遵循 [Fcitx 的 Plasma Wayland 配置](https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plasma)。
-- SDDM 和 KDE 使用项目自带的 SVG 品牌占位壁纸；未加入 Firefox/Chromium。
+- 桌面使用原生 Breeze Light 与 KDE 官方 Next 壁纸；不额外绘制大字 Logo 或装饰面板。未加入 Firefox/Chromium。
 
 `scripts/configure-m2.py` 用于从 M1 profile 应用这些配置；已经配置后的仓库无需每次构建重跑。
 
 ## VirtualBox 构建
 
 沿用 M1 已安装的 `BasaltOS-M1-builder`，无需重新建仓库、格式化磁盘或安装系统。
+当前采用默认 VirtualBox 管理器，将已有构建机与其他虚拟机同时列出。
+不要再将 `VBOX_USER_HOME` 指向 `work/vbox-config`；旧隔离注册文件仅作为历史记录保留。
+构建机配置和磁盘仍在 `E:\BasaltOS\work\vms\BasaltOS-M1-builder\`，不移动其他虚拟机文件。
+如果默认管理器尚未注册已有构建机，只需登记一次，不能重复创建或格式化：
+
+```powershell
+$env:VBOX_USER_HOME = $null
+& 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe' registervm `
+  'E:\BasaltOS\work\vms\BasaltOS-M1-builder\BasaltOS-M1-builder.vbox'
+```
+
 宿主 PowerShell：
 
 ```powershell
 Set-Location E:\BasaltOS
-$env:VBOX_USER_HOME = 'E:\BasaltOS\work\vbox-config'
+$env:VBOX_USER_HOME = $null
 $vbox = 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe'
 & $vbox startvm BasaltOS-M1-builder --type headless
 tar -cf work/m2-source.tar .gitattributes .gitignore profile scripts docs README.md
@@ -78,8 +89,8 @@ python scripts/setup-qemu-windows.py
 .\scripts\start-m2-qemu.ps1 -Accelerator tcg
 ```
 
-此脚本为 QMP 截图验收使用 `-display none`，控制口仅绑定 `127.0.0.1:4452`。
-如需交互式可见窗口，可直接使用相同参数，将 `-display none` 改为 `-display sdl`。
+脚本默认打开 SDL 可见窗口，QMP 控制口仅绑定 `127.0.0.1:4452`。
+需要后台截图验收时加 `-Display none`，使用同一 ISO 和其余启动参数。
 WHPX 的 [QEMU 参数说明](https://www.qemu.org/docs/master/system/invocation.html)。
 
 ## 图形验收

@@ -67,10 +67,9 @@ wifi.backend=iwd
 write('airootfs/etc/shadow', 'root:$6$basaltos-m2$sox.tv65BjIA3Fl0J31sbnfu2hUTT/kQSGAITHmXAC/.7Grs5ZURYTomS.z0aitCcbgFGHcH/t4LyZvc8BAWa0:20758::::::\n')
 write('airootfs/etc/sddm.conf.d/10-basaltos.conf', '''[General]
 DisplayServer=x11
-GreeterEnvironment=QT_QUICK_BACKEND=software
 
 [Theme]
-Current=basaltos
+Current=breeze
 CursorTheme=breeze_cursors
 Font=Noto Sans CJK SC,11
 
@@ -117,10 +116,10 @@ ActiveByDefault=True
 0=Control+space
 ''')
 write('airootfs/root/.config/kdeglobals', '''[General]
-ColorScheme=BreezeDark
+ColorScheme=BreezeLight
 
 [KDE]
-LookAndFeelPackage=org.kde.breezedark.desktop
+LookAndFeelPackage=org.kde.breeze.desktop
 ''')
 write('airootfs/root/.config/konsolerc', '''[Desktop Entry]
 DefaultProfile=BasaltOS.profile
@@ -138,74 +137,15 @@ Parent=FALLBACK/
 TerminalColumns=105
 TerminalRows=28
 ''')
-write('airootfs/root/.config/autostart/basaltos-wallpaper.desktop', '''[Desktop Entry]
-Type=Application
-Name=BasaltOS wallpaper
-Exec=/usr/bin/plasma-apply-wallpaperimage /usr/share/backgrounds/basaltos/m2.svg
-TryExec=/usr/bin/plasma-apply-wallpaperimage
-OnlyShowIn=KDE;
-X-KDE-autostart-phase=2
-StartupNotify=false
-''')
-write('airootfs/usr/share/backgrounds/basaltos/m2.svg', '''<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
-<defs><linearGradient id="sky" x2="1" y2="1"><stop stop-color="#081a29"/><stop offset="1" stop-color="#203743"/></linearGradient>
-<radialGradient id="sun"><stop stop-color="#e7ab70" stop-opacity=".55"/><stop offset="1" stop-color="#e7ab70" stop-opacity="0"/></radialGradient></defs>
-<path fill="url(#sky)" d="M0 0h1920v1080H0z"/><circle cx="1450" cy="330" r="480" fill="url(#sun)"/>
-<circle cx="1450" cy="330" r="72" fill="#e6b984"/>
-<path fill="#132933" d="M0 760L500 390l260 320 220-140 320 310 310-310 310 200v310H0z"/>
-<path fill="#0c2029" d="M0 850l310-200 280 160 380-120 340 240 330-160 280 100v210H0z"/>
-<g stroke="#29434c" stroke-width="2" fill="#102833"><path d="M1050 1080V790l70-40 70 40v290M1190 1080V710l70-40 70 40v370M1330 1080V810l70-40 70 40v270M1470 1080V680l70-40 70 40v400M1610 1080V760l70-40 70 40v320M1750 1080V860l70-40 70 40v220"/></g>
-<text x="110" y="155" fill="#e7ecec" font-family="sans-serif" font-size="54" letter-spacing="9">BASALTOS</text>
-<path stroke="#cf9c6e" stroke-width="4" d="M112 186h92"/>
-</svg>
-''')
-write('airootfs/usr/share/sddm/themes/basaltos/metadata.desktop', '''[SddmGreeterTheme]
-Name=BasaltOS
-Description=BasaltOS Live login
-Author=BasaltOS
-Type=sddm-theme
-Version=1.0
-MainScript=Main.qml
-ConfigFile=theme.conf
-Theme-API=2.0
-QtVersion=6
-''')
-write('airootfs/usr/share/sddm/themes/basaltos/theme.conf', '[General]\nbackground=/usr/share/backgrounds/basaltos/m2.svg\n')
-write('airootfs/usr/share/sddm/themes/basaltos/Main.qml', '''import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
-
-Rectangle {
-    id: screen
-    width: 1280; height: 800
-    color: "#10232d"
-    function login() { sddm.login(username.text, password.text, Math.max(0, sessions.currentIndex)) }
-    Image { anchors.fill: parent; source: config.background; fillMode: Image.PreserveAspectCrop }
-    Rectangle {
-        anchors.centerIn: parent; width: 390; height: 430; radius: 18
-        color: "#e810202b"; border.color: "#45616b"
-        ColumnLayout {
-            anchors.fill: parent; anchors.margins: 35; spacing: 16
-            Label { text: "BasaltOS"; color: "#f2eee8"; font.pixelSize: 34; font.bold: true }
-            Label { text: "欢迎进入 Plasma 桌面"; color: "#b4c8cd"; font.pixelSize: 15 }
-            Item { Layout.preferredHeight: 5 }
-            TextField { id: username; text: "root"; placeholderText: "用户名"; Layout.fillWidth: true }
-            TextField {
-                id: password; placeholderText: "密码"; echoMode: TextInput.Password
-                Layout.fillWidth: true; onAccepted: screen.login()
-                Component.onCompleted: forceActiveFocus()
-            }
-            ComboBox { id: sessions; model: sessionModel; textRole: "name"; currentIndex: Math.max(0, sessionModel.lastIndex); Layout.fillWidth: true }
-            Button { text: "登录"; highlighted: true; Layout.fillWidth: true; onClicked: screen.login() }
-            Label { id: error; text: "Live 会话 · root"; color: "#b4c8cd"; font.pixelSize: 12 }
-        }
-    }
-    Connections {
-        target: sddm
-        function onLoginFailed() { error.text = "登录失败，请重试"; password.text = ""; password.forceActiveFocus() }
-    }
-}
-''')
+# Use KDE's packaged Breeze login, standard layout and official Next wallpaper.
+for obsolete in (
+    'airootfs/root/.config/autostart/basaltos-wallpaper.desktop',
+    'airootfs/usr/share/backgrounds/basaltos/m2.svg',
+    'airootfs/usr/share/sddm/themes/basaltos/Main.qml',
+    'airootfs/usr/share/sddm/themes/basaltos/metadata.desktop',
+    'airootfs/usr/share/sddm/themes/basaltos/theme.conf',
+):
+    remove(obsolete)
 write('airootfs/etc/motd', 'BasaltOS M2 — KDE Plasma Live ISO\n')
 os_release = (profile / 'airootfs/etc/os-release').read_text().replace('BasaltOS M1','BasaltOS M2')
 write('airootfs/etc/os-release', os_release)
