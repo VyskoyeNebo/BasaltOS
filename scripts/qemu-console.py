@@ -22,7 +22,9 @@ args = parser.parse_args()
 try:
     connection = socket.create_connection((args.host, args.port), timeout=10)
 except OSError as error:
-    parser.exit(1, f'QMP unavailable at {args.host}:{args.port}: {error}. '
+    error_code = getattr(error, 'winerror', None) or error.errno
+    parser.exit(1, f'QMP unavailable at {args.host}:{args.port}: '
+                f'{type(error).__name__} (code {error_code}). '
                 'Check that the BasaltOS QEMU test VM is running and uses this port.\n')
 stream = connection.makefile('rwb', buffering=0)
 greeting = stream.readline()
