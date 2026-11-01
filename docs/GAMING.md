@@ -13,7 +13,7 @@ Live root 密码仍为 `basaltos`，保留控制台维护能力。
 从桌面或 KDE“游戏”菜单打开 Steam、Lutris。Steam 首次运行会从 Valve 下载客户端更新和
 运行库，需要联网及额外空间；这些动态内容和用户账号不预置到 ISO。
 Arch 软件包的 core、extra、multilib 均使用清华源。
-Steam 客户端、游戏与 GE-Proton 内容使用各自上游分发渠道，并非清华 Arch 软件包镜像。
+Steam 客户端、游戏、Lutris runner 与 GE-Proton 内容使用各自上游分发渠道，并非清华 Arch 软件包镜像。
 
 Live 会话数据在重启后丢失，建议安装到硬盘后再下载大型游戏。
 M4 Live 的可写层上限为内存的 50%，按实际写入使用内存；这为 Steam 首次更新预留空间。
@@ -70,6 +70,9 @@ gamemoded -s
 `gamemoded -s` 的 active 表示当前有程序请求 GameMode；没有请求时显示 inactive 是正常状态，
 与守护进程服务是否正在运行不同。参见 [GameMode 上游](https://github.com/FeralInteractive/gamemode)。
 OpenGL 程序若普通包装未能注入，可尝试 `mangohud --dlsym glxgears`。
+本次 QEMU 的软件 Vulkan 路径出现过 MangoHud FPS 为 0、帧时间为 inf 的异常；
+正式叠加层验收使用 `gamemoderun mangohud --dlsym glxgears`，数值显示正常。
+这是本机虚拟环境的实测边界，未验证物理 GPU 是否出现同样现象。
 
 ## 安装 Proton-GE
 

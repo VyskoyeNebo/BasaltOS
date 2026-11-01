@@ -76,8 +76,8 @@ Calamares 包来源与构建方法继续见 [BUILD-M3.md](BUILD-M3.md)。
 `-Display none` 用于后台截图，默认 SDL 显示可交互窗口。
 普通 Live 用户为 **gamer / basaltos**。
 
-软件渲染下可测试 `gamemoderun mangohud vkcube`；温度传感器、性能调节和硬件 Vulkan
-能力受虚拟机限制。Steam 首次启动仍需下载官方客户端更新。
+本机正式软件渲染叠加层验收使用 `gamemoderun mangohud --dlsym glxgears`。
+Vulkan 路径的 HUD 计数异常及虚拟硬件限制见结果文档；Steam 首次启动仍需下载官方客户端更新。
 
 ```powershell
 python scripts/qemu-console.py snapshot --port 4454 --filename E:/BasaltOS/docs/m4-steam.png

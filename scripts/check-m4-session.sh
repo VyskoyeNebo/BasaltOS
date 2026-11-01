@@ -39,9 +39,13 @@ baseline)
     echo M4_SESSION_BASELINE_PASSED
     ;;
 demo)
-    nohup gamemoderun mangohud vkcube --width 960 --height 640 > "$HOME/m4-vkcube.log" 2>&1 &
-    echo "$!" > "$HOME/m4-vkcube.pid"
-    echo 'Started the real GameMode + MangoHud + vkcube demo.'
+    if [[ "${2:-vulkan}" == opengl ]]; then
+        nohup gamemoderun mangohud --dlsym glxgears -geometry 960x640 > "$HOME/m4-glxgears.log" 2>&1 &
+    else
+        nohup gamemoderun mangohud vkcube --width 960 --height 640 > "$HOME/m4-vkcube.log" 2>&1 &
+    fi
+    echo "$!" > "$HOME/m4-demo.pid"
+    echo 'Started the real GameMode + MangoHud graphics demo.'
     ;;
 gamemode)
     log="$HOME/m4-gamemode-check.log"
@@ -52,7 +56,7 @@ gamemode)
     printf '%s\n' "$status"
     grep -Eq '(^|[[:space:]])active([[:space:]]|$)' <<< "$status"
     gamemodelist
-    pgrep -a vkcube
+    pgrep -a 'vkcube|glxgears'
     echo M4_GAMEMODE_ACTIVE_PASSED
     ;;
 *) echo 'Use baseline, demo or gamemode.' >&2; exit 2 ;;
