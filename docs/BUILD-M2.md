@@ -114,7 +114,8 @@ python scripts/qemu-console.py type --port 4452 --text basaltos
 
 ```powershell
 python scripts/qemu-console.py key --port 4452 --key ctrl-alt-t
-python scripts/qemu-console.py key --port 4452 --key ctrl-spc
+# 确认输入状态；若当前为拼音，先执行以下切换命令：
+# python scripts/qemu-console.py key --port 4452 --key ctrl-spc
 python scripts/qemu-console.py type --port 4452 --text 'hostnamectl --static; ip -br a; pgrep -a fcitx5'
 # 完成真实拼音输入后保存桌面与 Konsole：
 python scripts/qemu-console.py snapshot --port 4452 --filename E:/BasaltOS/docs/m2-desktop.png
@@ -123,4 +124,6 @@ python scripts/qemu-console.py quit --port 4452
 ```
 
 截图来自真实 QEMU VGA 帧缓冲区，输入通过 QMP 键盘事件完成。
+切换到拼音后输入 `zhongwen`，空格提交“中文”；不要在中文验收时设置 `LC_ALL=C`，
+保持默认 UTF-8，以免 shell 将中文显示为转义字符。
 最终结果、ISO 大小和校验值以 `docs/M2-RESULTS.md` 为准。
