@@ -41,7 +41,7 @@ mkdir -p "$target/boot/efi"
 mount -o umask=0077 /dev/vda1 "$target/boot/efi"
 unsquashfs -f -d "$target" /run/archiso/bootmnt/basalt/x86_64/airootfs.sfs
 genfstab -U "$target" > "$target/etc/fstab"
-arch-chroot "$target" useradd -m -G wheel -s /bin/bash "$login_name"
+arch-chroot "$target" useradd -m -U -G wheel -s /bin/bash "$login_name"
 printf '%s:%s\nroot:%s\n' "$login_name" "$user_password" "$user_password" | arch-chroot "$target" chpasswd
 unset user_password
 arch-chroot "$target" /bin/bash /usr/local/lib/basaltos/finalize-installed.sh

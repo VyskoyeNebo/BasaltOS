@@ -53,11 +53,15 @@ requirements:
   required: [ storage, ram, root ]
 geoip:
   style: none
+  url: https://mirrors.tuna.tsinghua.edu.cn/
+  selector: CountryCode
 ''',
 'locale': '''region: Asia
 zone: Shanghai
 geoip:
   style: none
+  url: https://mirrors.tuna.tsinghua.edu.cn/
+  selector: TimeZone
 ''',
 'keyboard': '''xOrgConfFileName: /etc/X11/xorg.conf.d/00-keyboard.conf
 convertedKeymapPath: /usr/share/kbd/keymaps/xkb
@@ -66,7 +70,6 @@ useLocale1: false
 writeEtcDefaultKeyboard: false
 configure:
   kwin: false
-  gnome: false
 ''',
 'partition': '''efi:
   mountPoint: /boot/efi
@@ -123,6 +126,7 @@ mountOptions:
     destination: ""
 ''',
 'users': '''defaultGroups: [ users, wheel, video, audio, network, storage ]
+autologinGroup: autologin
 sudoersGroup: wheel
 sudoersConfigureWithGroup: true
 setRootPassword: true

@@ -64,7 +64,7 @@ arch-chroot /mnt env \
 Calamares 采用离线解包 Live squashfs 的方式安装同一套系统与内核。
 支持可自定义的普通用户、密码和 hostname，SDDM 不自动登录。
 
-自动擦除布局：GPT，BIOS boot 分区、512 MiB ESP、1536 MiB ext4 `/boot`，
+自动擦除布局：GPT，512 MiB ESP、8 MiB BIOS boot 分区、1536 MiB ext4 `/boot`，
 其余空间为 btrfs；勾选加密后 btrfs 位于 LUKS2 容器内。
 ESP 与 `/boot` 保留明文，系统文件及 `/home` 加密。没有配置休眠或 swap 文件。
 普通安装也可不勾选加密。
@@ -72,6 +72,10 @@ ESP 与 `/boot` 保留明文，系统文件及 `/home` 加密。没有配置休�
 btrfs 子卷包括 `@`、`@home`、`@cache`、`@log`；挂载启用 zstd 压缩。
 根目录与 home 分别配置 Snapper，生成安装初始快照并启用 timeline/cleanup timers。
 snap-pac 包自带 pacman 事务 hook，管理根目录软件包事务快照。
+
+`scripts/validate-calamares.py` 使用同版本上游 schema 检查模块配置。
+3.4.3 的 partition schema 遗漏 `defaultPartitionTableType` 与
+`createHybridBootloaderLayout`；校验器确认源码实现仍存在后，按其实际类型补充校验。
 
 `/usr/local/lib/basaltos/finalize-installed.sh` 在目标 chroot 内执行：
 配置 sd-encrypt、crypttab、内核与 initramfs、GRUB 参数、用户桌面默认值和 Snapper，

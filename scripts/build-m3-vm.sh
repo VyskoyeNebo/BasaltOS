@@ -23,6 +23,10 @@ for path in (source / 'profile/airootfs/etc/calamares').rglob('*.conf'):
     yaml.safe_load(path.read_text())
 print('Calamares YAML and shell syntax checks passed.')
 PY
+schema_source=/var/tmp/basaltos-calamares/src/calamares-3.4.3
+if [[ -d "/mnt$schema_source" ]]; then
+    arch-chroot /mnt python "$guest_source/scripts/validate-calamares.py" "$schema_source"
+fi
 arch-chroot /mnt env BASALT_MILESTONE=m3 \
     BASALT_BUILD_ROOT=/root/BasaltOS/work/linux-build \
     BASALT_OUT_DIR=/root/BasaltOS/out/m3 \

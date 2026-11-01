@@ -3,7 +3,7 @@ set -euo pipefail
 (( EUID == 0 )) || { echo 'Run as root in the BasaltOS builder.' >&2; exit 1; }
 project_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 pacman -Syu --noconfirm --needed base-devel cmake ninja extra-cmake-modules qt6-tools \
-  python python-yaml yaml-cpp qt6-base qt6-svg qt6-declarative kcoreaddons kconfig \
+  python python-yaml python-jsonschema yaml-cpp qt6-base qt6-svg qt6-declarative kcoreaddons kconfig \
   ki18n kwidgetsaddons kpmcore libpwquality polkit-qt6 boost boost-libs parted \
   cryptsetup rsync squashfs-tools
 id basaltpkg &>/dev/null || useradd --system --create-home basaltpkg
