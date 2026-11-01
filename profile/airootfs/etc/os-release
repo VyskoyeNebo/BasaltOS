@@ -1,0 +1,6 @@
+NAME="BasaltOS"
+PRETTY_NAME="BasaltOS M1"
+ID=basaltos
+ID_LIKE=arch
+BUILD_ID=rolling
+ANSI_COLOR="1;36"
