@@ -8,6 +8,18 @@
 - [官网](https://vyskoyenebo.github.io/BasaltOS/)
 - [首版 0.1.0](https://github.com/VyskoyeNebo/BasaltOS/releases/tag/v0.1.0)
 
+## 公开发布结果
+
+0.1.1 已于 2026-11-02 23:11（Asia/Shanghai）公开为 Latest Release，九个附件均上传完成。
+服务端 SHA256 与本地全部相同；匿名 HEAD 检查九个下载地址均为 200，大小正确。
+[官网部署 41469130129](https://github.com/VyskoyeNebo/BasaltOS/actions/runs/41469130129) 已成功，
+匿名 HTTPS 检查 28 个页面/文件通过，公网签名仓库与本地验签后的文件逐字节一致。
+首页下载按钮、完整 ISO SHA256 和实际桌面截图均已切换为 0.1.1。
+[公网官网截图](0.1.1-site.jpg)另行保存。
+
+发布前后比较已确认：`v0.1.0` 标签对象、发行说明及其九个附件的 ID、大小、SHA256、创建时间均未变。
+新 `v0.1.1` 对应已验收源码提交 `65df65d`；本节的发布状态记录属于后续文档提交，版本标签保持不动。
+
 ## 原因与修正
 
 Dolphin 与 KDE 系统设置原本已安装。首版仅预置安装器、Steam、Lutris 的桌面快捷方式，
