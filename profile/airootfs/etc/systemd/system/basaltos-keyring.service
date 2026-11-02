@@ -1,0 +1,12 @@
+[Unit]
+Description=Trust the pinned BasaltOS test release public key
+After=local-fs.target pacman-init.service
+Before=basaltos-update-check.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/lib/basaltos/init-keyring.sh
+
+[Install]
+WantedBy=multi-user.target

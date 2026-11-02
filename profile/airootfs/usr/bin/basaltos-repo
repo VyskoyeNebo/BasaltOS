@@ -1,0 +1,39 @@
+#!/usr/bin/python
+"""Enable the explicitly chosen signed BasaltOS repository, or disable it."""
+import argparse
+import os
+from pathlib import Path
+import subprocess
+from urllib.parse import urlsplit
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('action', choices=['enable', 'disable'])
+parser.add_argument('url', nargs='?')
+parser.add_argument('--allow-http', action='store_true', help='Explicit local HTTP test only')
+args = parser.parse_args()
+if os.geteuid() != 0:
+    parser.error('Run as root')
+begin = '# BEGIN BASALTOS REPOSITORY'
+end = '# END BASALTOS REPOSITORY'
+path = Path('/etc/pacman.conf')
+text = path.read_text()
+if text.count(begin) != 1 or text.count(end) != 1:
+    parser.error('Managed repository block is missing or ambiguous; edit configuration manually')
+block = '# [basaltos]\n# SigLevel = Required\n# Server = https://OWNER.github.io/REPOSITORY/x86_64\n'
+if args.action == 'enable':
+    if not args.url or any(c.isspace() for c in args.url):
+        parser.error('An explicit repository base URL is required')
+    url = urlsplit(args.url)
+    if (url.scheme != 'https' and not (args.allow_http and url.scheme == 'http')) or not url.netloc or url.username or url.password or url.query or url.fragment:
+        parser.error('Use HTTPS, or explicitly allow local HTTP; credentials/query/fragment are forbidden')
+    if 'OWNER' in args.url or 'REPOSITORY' in args.url:
+        parser.error('Replace placeholder owner/repository before enabling')
+    subprocess.run(['systemctl', 'start', 'basaltos-keyring.service'], check=True)
+    block = f'[basaltos]\nSigLevel = Required\nServer = {args.url.rstrip("/")}\n'
+first = text.index(begin)+len(begin)
+last = text.index(end)
+temporary = path.with_name('pacman.conf.basaltos-new')
+temporary.write_text(text[:first]+'\n'+block+text[last:])
+temporary.chmod(0o644)
+temporary.replace(path)
+print(f'BasaltOS repository {args.action}d; signature checks remain Required.')

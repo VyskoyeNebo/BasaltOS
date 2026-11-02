@@ -16,5 +16,6 @@
   "airootfs/etc/systemd/system/multi-user.target.wants/nftables.service": "/usr/lib/systemd/system/nftables.service",
   "airootfs/etc/systemd/system/timers.target.wants/basaltos-update-check.timer": "../basaltos-update-check.timer",
   "airootfs/etc/systemd/system/avahi-daemon.service": "/dev/null",
-  "airootfs/etc/systemd/system/avahi-daemon.socket": "/dev/null"
+  "airootfs/etc/systemd/system/avahi-daemon.socket": "/dev/null",
+  "airootfs/etc/systemd/system/multi-user.target.wants/basaltos-keyring.service": "../basaltos-keyring.service"
 }

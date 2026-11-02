@@ -1,0 +1,11 @@
+pkgname=basaltos-release
+pkgver=0.1.0_m6
+pkgrel=1
+pkgdesc='BasaltOS M6 test release metadata (no system configuration changes)'
+arch=('any')
+license=('0BSD')
+package() {
+    install -dm755 "$pkgdir/usr/share/basaltos" "$pkgdir/usr/share/licenses/$pkgname"
+    printf 'BasaltOS 0.1.0-m6\nTest release; not a production signing identity.\n' > "$pkgdir/usr/share/basaltos/release-info"
+    printf 'Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.\nTHE SOFTWARE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND.\n' > "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

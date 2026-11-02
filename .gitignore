@@ -3,3 +3,10 @@
 *.log
 __pycache__/
 *.pyc
+/repo/x86_64/
+*.pkg.tar.*
+*.db.tar.*
+*.files.tar.*
+# Release private material belongs only in ignored work/, never in source.
+*.sec.asc
+*.private

@@ -94,11 +94,18 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dry-run', action='store_true', help='Create real snapshots/boot backups; only check updates, never install')
     parser.add_argument('--recovery-info', metavar='ID', help='Validate backups and print offline recovery instructions')
+    parser.add_argument('--check-only', action='store_true', help='Query enabled repositories using temporary databases; no snapshots or installed-system changes')
     args = parser.parse_args()
+    if args.check_only and (args.dry_run or args.recovery_info):
+        parser.error('--check-only cannot be combined with other modes')
     if os.geteuid() != 0:
         raise RuntimeError('Run with sudo or as root')
     if args.recovery_info:
         recovery(args.recovery_info)
+        return
+    if args.check_only:
+        import runpy
+        runpy.run_path('/usr/lib/basaltos/check-only.py', run_name='__main__')
         return
     if Path('/run/archiso/bootmnt').exists():
         raise RuntimeError('Use the installed btrfs system; Live overlay cannot provide persistent root snapshots')

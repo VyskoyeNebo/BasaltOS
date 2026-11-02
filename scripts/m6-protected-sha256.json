@@ -1,0 +1,430 @@
+{
+  "profile/airootfs/etc/NetworkManager/conf.d/10-basaltos.conf": {
+    "type": "file",
+    "sha256": "7ca30a06c019a937b35afaf311cefe0c0a5fbdd7aa3cb736c499dd2b44ac7fbf"
+  },
+  "profile/airootfs/etc/NetworkManager/conf.d/90-basaltos-privacy.conf": {
+    "type": "file",
+    "sha256": "f3a7fa93ed0ddc6182c7bda03039ea9af8901974121422e5db77d4a6cabb5c23"
+  },
+  "profile/airootfs/etc/calamares/modules/bootloader.conf": {
+    "type": "file",
+    "sha256": "258aac75235f22c79c9af52c694df673553876c18ac869439c4209dacb737340"
+  },
+  "profile/airootfs/etc/calamares/modules/finished.conf": {
+    "type": "file",
+    "sha256": "351632f7754cb1debbf76cd8f80fcb3496e8305cd12d3d7b2c4279d0ae26cfad"
+  },
+  "profile/airootfs/etc/calamares/modules/keyboard.conf": {
+    "type": "file",
+    "sha256": "26025c479ab7cbfaf459b0ed4d31dae7bebac5bc84b9a916b7cf5594a1443acf"
+  },
+  "profile/airootfs/etc/calamares/modules/locale.conf": {
+    "type": "file",
+    "sha256": "76329b8bcc09820fcef48ea9810e65a34393b3d374b285d373730ab45605b37f"
+  },
+  "profile/airootfs/etc/calamares/modules/mount.conf": {
+    "type": "file",
+    "sha256": "c26002033cea7db7c85f74e0ba3ae5cd79900e700eddea9941bd67701253d1cf"
+  },
+  "profile/airootfs/etc/calamares/modules/partition.conf": {
+    "type": "file",
+    "sha256": "e0c95c3f0ac16a905351f271bfd37e09cee3c5af8407aa8c0aacac260fd7a0b5"
+  },
+  "profile/airootfs/etc/calamares/modules/shellprocess.conf": {
+    "type": "file",
+    "sha256": "8484de30cfaa6079255fcc47fc530ccf4d9427ad6874f828c4b1338769b96e38"
+  },
+  "profile/airootfs/etc/calamares/modules/unpackfs.conf": {
+    "type": "file",
+    "sha256": "fdaa6e9bc93cbb54afba6f89f54829ff7853e5df2a2c99ed5c63e537848995c5"
+  },
+  "profile/airootfs/etc/calamares/modules/users.conf": {
+    "type": "file",
+    "sha256": "e1849acb1c9d24de9bc8abb6db1b4d20ed2e5fc85427788ea7410841a382f4bd"
+  },
+  "profile/airootfs/etc/calamares/modules/welcome.conf": {
+    "type": "file",
+    "sha256": "3937095201d1b0b4c0f197f36b3e8c14a082ba90d5dd1fa423456cb9f2c44eb2"
+  },
+  "profile/airootfs/etc/calamares/settings.conf": {
+    "type": "file",
+    "sha256": "97512598493f8a9d5cf0c6f28ceea258dd9f5a92b5b87e0b0e24922e0bf15f71"
+  },
+  "profile/airootfs/etc/hostname": {
+    "type": "file",
+    "sha256": "dd012c109e3282a587b455903db805d66e1a0eafbaea1c3a828fa8ef5a47af0b"
+  },
+  "profile/airootfs/etc/locale.conf": {
+    "type": "file",
+    "sha256": "0f015bc2f034144d2de10f94b6f4312b1ee69c5519dc008afe4c03ac98167ccc"
+  },
+  "profile/airootfs/etc/locale.gen": {
+    "type": "file",
+    "sha256": "e00b6d270fd3d3e54ac22a9f50cf5c7a6e8d044087478b719790cbb07802bb07"
+  },
+  "profile/airootfs/etc/localtime": {
+    "type": "link",
+    "target": "/usr/share/zoneinfo/Asia/Shanghai"
+  },
+  "profile/airootfs/etc/mkinitcpio.conf.d/archiso.conf": {
+    "type": "file",
+    "sha256": "7b08d6fc9d97159f66a4b637fb524eb94ae1f6dd472884f45388950a1f2078a0"
+  },
+  "profile/airootfs/etc/motd": {
+    "type": "file",
+    "sha256": "c54d694938910d8ae114c26426c7aff6fa195724cfd4fc029225ebf8215737f4"
+  },
+  "profile/airootfs/etc/nftables.conf": {
+    "type": "file",
+    "sha256": "fdfc3282895958c1cbf70343b2fde17e48f4dd0ae9e0f075092329544e282a80"
+  },
+  "profile/airootfs/etc/os-release": {
+    "type": "file",
+    "sha256": "440e739851be2e5a49e0007f7838cbb55e6a55121f4a3f201b3feb01e540fb69"
+  },
+  "profile/airootfs/etc/pacman.d/hooks/40-basaltos-locale.hook": {
+    "type": "file",
+    "sha256": "ca423d55aa9331fb62cbbddabec450976efa17de21038d194ffbba08d4be4b57"
+  },
+  "profile/airootfs/etc/pacman.d/hooks/zzzz99-remove-custom-hooks-from-airootfs.hook": {
+    "type": "file",
+    "sha256": "b00ec7d9c5ee91df896130ddb121e53a7ead5726e6216d71477b9ea42b830504"
+  },
+  "profile/airootfs/etc/pacman.d/mirrorlist": {
+    "type": "file",
+    "sha256": "8bef863f67759d7295e25fd47b4e35f56913ad8ce4a92f6eefe69e629a2b8053"
+  },
+  "profile/airootfs/etc/passwd": {
+    "type": "file",
+    "sha256": "57a3cda609fed8b2e7b710ee4bb74e8982c2c9fca357814253f62209a00d6dd0"
+  },
+  "profile/airootfs/etc/resolv.conf": {
+    "type": "link",
+    "target": "/run/systemd/resolve/stub-resolv.conf"
+  },
+  "profile/airootfs/etc/sddm.conf.d/10-basaltos.conf": {
+    "type": "file",
+    "sha256": "6994a36e44efdf7583d2e58f451b7e8ea3fee461bac77c43d62ec214eff2899a"
+  },
+  "profile/airootfs/etc/sddm.conf.d/20-basaltos-gaming.conf": {
+    "type": "file",
+    "sha256": "cc391141c9328a457aae7faaf717ef23d17bf47c5cbefe37f7fe6582d618b8c4"
+  },
+  "profile/airootfs/etc/shadow": {
+    "type": "file",
+    "sha256": "85ac423a4d02b5f578cab1305a657425c4df4e9e6f33e8afd54bb2a12c8af342"
+  },
+  "profile/airootfs/etc/skel/.config/MangoHud/MangoHud.conf": {
+    "type": "file",
+    "sha256": "74a7e86f91f59a1d683cb56d385456df753987254758dc994b39a8fdb39ee870"
+  },
+  "profile/airootfs/etc/skel/.config/autostart/org.fcitx.Fcitx5.desktop": {
+    "type": "file",
+    "sha256": "b5d3f847a7648d4fcca1b4275b775eb190fc28601a59be90cde5912ea0a6d8c3"
+  },
+  "profile/airootfs/etc/skel/.config/environment.d/90-fcitx5.conf": {
+    "type": "file",
+    "sha256": "95338b1e8081ba62b6b6a083634e7c81e81871074c53749d267b86364a943487"
+  },
+  "profile/airootfs/etc/skel/.config/fcitx5/config": {
+    "type": "file",
+    "sha256": "7bd51f75b0047e154b1463b90b96e1c3a9edd076df68ca36a809e0b4fb886253"
+  },
+  "profile/airootfs/etc/skel/.config/fcitx5/profile": {
+    "type": "file",
+    "sha256": "11a328a09a939f9571f2115fae6c26a68171af8184fcdfdfced4d09b50feac4d"
+  },
+  "profile/airootfs/etc/skel/.config/kdeglobals": {
+    "type": "file",
+    "sha256": "e6465c92c79e5b7e72b47e1c17a028ac201f39550fff4d65e5265c63621a7613"
+  },
+  "profile/airootfs/etc/skel/.config/konsolerc": {
+    "type": "file",
+    "sha256": "f4369f1a98eb2d17b4c1695bbc0fc848e871e8500f978b7716d6cf8b08784ba3"
+  },
+  "profile/airootfs/etc/skel/.config/kwinrc": {
+    "type": "file",
+    "sha256": "7bff33f80fa34e38188eb33fdd6564bf289496525f938eb786687f012db5c2fc"
+  },
+  "profile/airootfs/etc/skel/.config/user-dirs.dirs": {
+    "type": "file",
+    "sha256": "e7f4acab6c5958ab70431bad1daac7492c71e96864a1d21eddd07dc21699881e"
+  },
+  "profile/airootfs/etc/skel/.local/share/konsole/BasaltOS.profile": {
+    "type": "file",
+    "sha256": "751fe17809ff6f0d7577d4f986108691f75d5a93b80a8c1810a1171440ad3334"
+  },
+  "profile/airootfs/etc/skel/Desktop/lutris.desktop": {
+    "type": "file",
+    "sha256": "7030e9757cb436114343b42aa949210d30267e4eb0f7698cf7fc00532ec2f989"
+  },
+  "profile/airootfs/etc/skel/Desktop/steam.desktop": {
+    "type": "file",
+    "sha256": "af5f928f323fd4cc452d78f14a380ad1c9329a08f9ea439ef91b6ac3e67df99c"
+  },
+  "profile/airootfs/etc/systemd/journald.conf.d/volatile-storage.conf": {
+    "type": "file",
+    "sha256": "c0c9a711f7554fdd02650409b098fc0636b8f3f574f03d927c6df84f5ec82a7f"
+  },
+  "profile/airootfs/etc/systemd/logind.conf.d/do-not-suspend.conf": {
+    "type": "file",
+    "sha256": "17ea3cafdfa2575a94d36e7328148bc5da28bb4833e16bc4a474f8dcdc2b73df"
+  },
+  "profile/airootfs/etc/systemd/network/20-ethernet.network": {
+    "type": "file",
+    "sha256": "4da01b7031f3528ba64c0b0f1461e3d70da06d8c475a752b711cbdb2eaf0c34e"
+  },
+  "profile/airootfs/etc/systemd/network/20-wlan.network": {
+    "type": "file",
+    "sha256": "f345a066b7ab2ee4526a8b3354cc21ea114bdc877c112aa1fe35ffed02eea984"
+  },
+  "profile/airootfs/etc/systemd/network/20-wwan.network": {
+    "type": "file",
+    "sha256": "860f7678e5f5daa20e7dbb8b947d63b086f190ce8895678576fd0922d53d8924"
+  },
+  "profile/airootfs/etc/systemd/networkd.conf.d/ipv6-privacy-extensions.conf": {
+    "type": "file",
+    "sha256": "d88fd1c481579aa7d0ffc12ef39d77cc474c33bd465eda5515cd114025597dcd"
+  },
+  "profile/airootfs/etc/systemd/resolved.conf.d/archiso.conf": {
+    "type": "file",
+    "sha256": "5a9c2b59354e526e4c5390505c7037eecefd96b5753826ce265d6062a0554eb3"
+  },
+  "profile/airootfs/etc/systemd/resolved.conf.d/zz-basaltos-security.conf": {
+    "type": "file",
+    "sha256": "703f6d5803854f9038914bd2405542f814631096dfd8c50375043c04d091314b"
+  },
+  "profile/airootfs/etc/systemd/system-generators/systemd-gpt-auto-generator": {
+    "type": "link",
+    "target": "/dev/null"
+  },
+  "profile/airootfs/etc/systemd/system/NetworkManager.service.d/90-basaltos-firewall.conf": {
+    "type": "file",
+    "sha256": "d48fd35e6294417d503b687631259e92e37669da082fd8aeca7ec40fd6ecef48"
+  },
+  "profile/airootfs/etc/systemd/system/avahi-daemon.service": {
+    "type": "link",
+    "target": "/dev/null"
+  },
+  "profile/airootfs/etc/systemd/system/avahi-daemon.socket": {
+    "type": "link",
+    "target": "/dev/null"
+  },
+  "profile/airootfs/etc/systemd/system/basaltos-gaming-accounts.service": {
+    "type": "file",
+    "sha256": "c720759bc8d330ebdc67aaf642c5a48480d4940e4eac515a309ce5ec531fe58b"
+  },
+  "profile/airootfs/etc/systemd/system/basaltos-update-check.service": {
+    "type": "file",
+    "sha256": "ae78f94bcb06dfbb3ec0460f5fc99bcf9c06743a601b20eaccb8b918aace0030"
+  },
+  "profile/airootfs/etc/systemd/system/basaltos-update-check.timer": {
+    "type": "file",
+    "sha256": "944ac5be7203dded32e4f4df5419557076db718614fb2229effbb2179554b20d"
+  },
+  "profile/airootfs/etc/systemd/system/dbus-org.freedesktop.NetworkManager.service": {
+    "type": "link",
+    "target": "/usr/lib/systemd/system/NetworkManager.service"
+  },
+  "profile/airootfs/etc/systemd/system/dbus-org.freedesktop.resolve1.service": {
+    "type": "link",
+    "target": "/usr/lib/systemd/system/systemd-resolved.service"
+  },
+  "profile/airootfs/etc/systemd/system/dbus-org.freedesktop.timesync1.service": {
+    "type": "link",
+    "target": "/usr/lib/systemd/system/systemd-timesyncd.service"
+  },
+  "profile/airootfs/etc/systemd/system/default.target": {
+    "type": "link",
+    "target": "/usr/lib/systemd/system/graphical.target"
+  },
+  "profile/airootfs/etc/systemd/system/display-manager.service": {
+    "type": "link",
+    "target": "/usr/lib/systemd/system/sddm.service"
+  },
+  "profile/airootfs/etc/systemd/system/etc-pacman.d-gnupg.mount": {
+    "type": "file",
+    "sha256": "c9df1f5568fb2a6cfb3e84966b2bb2d1994eb7c481ef535289bb94bde8223f2c"
+  },
+  "profile/airootfs/etc/systemd/system/getty@tty1.service.d/autologin.conf": {
+    "type": "file",
+    "sha256": "91c35046e7a9d5dc73e0decef359e110d952cb694aa458df8ab37ed55e2ba21d"
+  },
+  "profile/airootfs/etc/systemd/system/multi-user.target.wants/NetworkManager.service": {
+    "type": "link",
+    "target": "/usr/lib/systemd/system/NetworkManager.service"
+  },
+  "profile/airootfs/etc/systemd/system/multi-user.target.wants/nftables.service": {
+    "type": "link",
+    "target": "/usr/lib/systemd/system/nftables.service"
+  },
+  "profile/airootfs/etc/systemd/system/multi-user.target.wants/pacman-init.service": {
+    "type": "link",
+    "target": "../pacman-init.service"
+  },
+  "profile/airootfs/etc/systemd/system/multi-user.target.wants/systemd-resolved.service": {
+    "type": "link",
+    "target": "/usr/lib/systemd/system/systemd-resolved.service"
+  },
+  "profile/airootfs/etc/systemd/system/nftables.service.d/90-basaltos.conf": {
+    "type": "file",
+    "sha256": "f90e4b9d7ef0239342123e450d469a5ce1668c1bbae8ca119fc28b00edf1d01d"
+  },
+  "profile/airootfs/etc/systemd/system/pacman-init.service": {
+    "type": "file",
+    "sha256": "a5407465b6b533bf7608bede2fa0035223b9aa659afca4223d40bca952cd6fd4"
+  },
+  "profile/airootfs/etc/systemd/system/sddm.service.d/20-basaltos-gaming-accounts.conf": {
+    "type": "file",
+    "sha256": "e7ca9884866e87260bb3dd3ccfa18ad119bcaf4b74079c3f0e3850791da70f60"
+  },
+  "profile/airootfs/etc/systemd/system/sysinit.target.wants/systemd-time-wait-sync.service": {
+    "type": "link",
+    "target": "/usr/lib/systemd/system/systemd-time-wait-sync.service"
+  },
+  "profile/airootfs/etc/systemd/system/sysinit.target.wants/systemd-timesyncd.service": {
+    "type": "link",
+    "target": "/usr/lib/systemd/system/systemd-timesyncd.service"
+  },
+  "profile/airootfs/etc/systemd/system/systemd-networkd-wait-online.service.d/wait-for-only-one-interface.conf": {
+    "type": "file",
+    "sha256": "3832d89abb32080a190c5b902c64fa7cdf219eafa921523f4e478712742a7df6"
+  },
+  "profile/airootfs/etc/systemd/system/timers.target.wants/basaltos-update-check.timer": {
+    "type": "link",
+    "target": "../basaltos-update-check.timer"
+  },
+  "profile/airootfs/etc/systemd/user/default.target.wants/gamemoded.service": {
+    "type": "link",
+    "target": "/usr/lib/systemd/user/gamemoded.service"
+  },
+  "profile/airootfs/etc/vconsole.conf": {
+    "type": "file",
+    "sha256": "2c09b43e51de87a82ff5eeb1c599ce25800b8d34810f14044bf73644e9f7b742"
+  },
+  "profile/airootfs/etc/xdg/KDE/UserFeedback.conf": {
+    "type": "file",
+    "sha256": "ffcd901ecf936af0c814a9b54bc7ab010f6a23466e6073f5b61515cb8ea3e4d7"
+  },
+  "profile/airootfs/etc/xdg/autostart/basaltos-update-notifier.desktop": {
+    "type": "file",
+    "sha256": "f7c9a42d3975221b001084dcb7cc7d05ae4e91f3f0931f577b97140a99df5999"
+  },
+  "profile/airootfs/root/.config/autostart/org.fcitx.Fcitx5.desktop": {
+    "type": "file",
+    "sha256": "b5d3f847a7648d4fcca1b4275b775eb190fc28601a59be90cde5912ea0a6d8c3"
+  },
+  "profile/airootfs/root/.config/environment.d/90-fcitx5.conf": {
+    "type": "file",
+    "sha256": "95338b1e8081ba62b6b6a083634e7c81e81871074c53749d267b86364a943487"
+  },
+  "profile/airootfs/root/.config/fcitx5/config": {
+    "type": "file",
+    "sha256": "7bd51f75b0047e154b1463b90b96e1c3a9edd076df68ca36a809e0b4fb886253"
+  },
+  "profile/airootfs/root/.config/fcitx5/profile": {
+    "type": "file",
+    "sha256": "11a328a09a939f9571f2115fae6c26a68171af8184fcdfdfced4d09b50feac4d"
+  },
+  "profile/airootfs/root/.config/kdeglobals": {
+    "type": "file",
+    "sha256": "e6465c92c79e5b7e72b47e1c17a028ac201f39550fff4d65e5265c63621a7613"
+  },
+  "profile/airootfs/root/.config/konsolerc": {
+    "type": "file",
+    "sha256": "f4369f1a98eb2d17b4c1695bbc0fc848e871e8500f978b7716d6cf8b08784ba3"
+  },
+  "profile/airootfs/root/.config/kwinrc": {
+    "type": "file",
+    "sha256": "7bff33f80fa34e38188eb33fdd6564bf289496525f938eb786687f012db5c2fc"
+  },
+  "profile/airootfs/root/.config/user-dirs.dirs": {
+    "type": "file",
+    "sha256": "e7f4acab6c5958ab70431bad1daac7492c71e96864a1d21eddd07dc21699881e"
+  },
+  "profile/airootfs/root/.local/share/konsole/BasaltOS.profile": {
+    "type": "file",
+    "sha256": "751fe17809ff6f0d7577d4f986108691f75d5a93b80a8c1810a1171440ad3334"
+  },
+  "profile/airootfs/root/Desktop/install-basaltos.desktop": {
+    "type": "file",
+    "sha256": "562f5666e95581cec95c405bf8053414f8d6d6ec441900bc54d5f2ac010e9020"
+  },
+  "profile/airootfs/usr/bin/basaltos-update": {
+    "type": "file",
+    "sha256": "f65ca20db19125c164015cd127074a410b0337698e9245fc5baed8b8b835f552"
+  },
+  "profile/airootfs/usr/lib/basaltos/check-updates.py": {
+    "type": "file",
+    "sha256": "5fde3cbd9ffe62993374a2291adef8b68d322e759b09cb7a393954dcffe5ee92"
+  },
+  "profile/airootfs/usr/lib/basaltos/update-notifier.py": {
+    "type": "file",
+    "sha256": "cf8c4b37eb68bb258580ab6f1005889cae7f28c98c68c4521e6083b6556594ee"
+  },
+  "profile/airootfs/usr/local/bin/install-basaltos": {
+    "type": "file",
+    "sha256": "64f299b20a048cb2a35818b1e8a8ab88f4919b5853677e714de2209ab8276f01"
+  },
+  "profile/airootfs/usr/local/lib/basaltos/finalize-installed.sh": {
+    "type": "file",
+    "sha256": "ca6f5b2d9bec46e37a382176e78309475a21c856007110e5759e5cbe8470d1f2"
+  },
+  "profile/airootfs/usr/local/lib/basaltos/gaming-accounts.sh": {
+    "type": "file",
+    "sha256": "5d7c27c293ca09e36b00f30969ac4a857db952f9b1f45c9c2aef550f4cff8be7"
+  },
+  "profile/airootfs/usr/share/applications/install-basaltos.desktop": {
+    "type": "file",
+    "sha256": "562f5666e95581cec95c405bf8053414f8d6d6ec441900bc54d5f2ac010e9020"
+  },
+  "profile/airootfs/usr/share/calamares/branding/basaltos/branding.desc": {
+    "type": "file",
+    "sha256": "1096699c6ebd81fb849686f4b56c4fbffa4745346334777e50020a6b5546e1f6"
+  },
+  "profile/airootfs/usr/share/calamares/branding/basaltos/show.qml": {
+    "type": "file",
+    "sha256": "44aa6bad32b59f7dbbc1abaca706b5d9cf49107bcb800ccff0563f805b5b3d57"
+  },
+  "profile/airootfs/var/lib/sddm/state.conf": {
+    "type": "file",
+    "sha256": "b56471372cae605d60852e81f2a33b1258746791b68bdcb96b7d60a3a9a7e276"
+  },
+  "profile/efiboot/loader/entries/01-archiso-linux.conf": {
+    "type": "file",
+    "sha256": "adbeec56c3665fb789ee321c934656a7bed4dfbae3003f697ce686b6bf4e8137"
+  },
+  "profile/efiboot/loader/loader.conf": {
+    "type": "file",
+    "sha256": "63244d29c68ee7de70aa2b541b59ccbdf51148f611ea95a67236d4b0e23d09ef"
+  },
+  "profile/grub/grub.cfg": {
+    "type": "file",
+    "sha256": "a5b63f1b3a28012a5bfc64a579422b48dd60711dad8ef08ac7c1ec52cad1d1b3"
+  },
+  "profile/grub/loopback.cfg": {
+    "type": "file",
+    "sha256": "a7c446fa560b767d03a794d22e3397c331822f63070a52e73ea3a5cad46e3dad"
+  },
+  "profile/packages.x86_64": {
+    "type": "file",
+    "sha256": "e1ad650d8312e9fe498c3cffe8b59887b4da905bb608485cfbfe33839db79864"
+  },
+  "profile/syslinux/archiso_head.cfg": {
+    "type": "file",
+    "sha256": "f0b7c85634e54baae024ce1b4e34267467c491cfb944d33d6981c855cf282041"
+  },
+  "profile/syslinux/archiso_sys-linux.cfg": {
+    "type": "file",
+    "sha256": "06ec74d7d1eb2ceb98b9fdc12d044f5fc3f7451209e6726ee34ff92a999c1e6d"
+  },
+  "profile/syslinux/archiso_sys.cfg": {
+    "type": "file",
+    "sha256": "0dce48680d9742af1cea05e4c3aa8c20ac8a50267a1627a8a8328dc3aa7e1027"
+  },
+  "profile/syslinux/syslinux.cfg": {
+    "type": "file",
+    "sha256": "e225f9db56514e69c1303767d102aa81cb079a96436020678278532057c400bb"
+  }
+}
