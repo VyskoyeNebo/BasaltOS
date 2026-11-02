@@ -18,6 +18,7 @@ M4 实测曾出现 Steam 自带的崩溃上传行为，因此不能声称“整�
 | systemd-timesyncd | 联网校时，保证 TLS/包签名时间正常 | `sudo timedatectl set-ntp false`；注意手动校时 |
 | NetworkManager 连通性探测 | 关闭，不自动访问探测页面 | `/etc/NetworkManager/conf.d/90-basaltos-privacy.conf` |
 | KDE KUserFeedback | 系统范围默认 `Enabled=false` | `/etc/xdg/KDE/UserFeedback.conf`；用户自定义配置可能覆盖系统默认，应另行检查 |
+| Fcitx 可选云拼音 | 首次使用可出现启用询问；云候选功能会涉及第三方输入查询，验收选择“否” | 首次询问选“否”，或在 Fcitx 拼音设置关闭云拼音；保留 M2/M4 输入法配置 |
 | basaltos-update-check.timer | 每周访问清华镜像检查版本，仅本地保存结果 | `sudo systemctl disable --now basaltos-update-check.timer` |
 | BasaltOS 桌面更新提醒 | 每分钟读取本地结果，不联网 | 在 KDE 自动启动中禁用“BasaltOS 更新提醒”，或创建同名用户 autostart 文件并设 `Hidden=true` |
 | pacman / archlinux-keyring WKD | 手动更新包、按上游机制更新公钥/校验 | 审阅 `systemctl list-timers`；可停 `archlinux-keyring-wkd-sync.timer`，但需自行维护可信 keyring |
