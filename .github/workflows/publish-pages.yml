@@ -17,8 +17,8 @@ concurrency:
   group: basaltos-pages
   cancel-in-progress: false
 env:
-  RELEASE_TAG: v0.1.0
-  PAYLOAD_VERSION: 0.1.0-m6
+  RELEASE_TAG: v0.1.1
+  PAYLOAD_VERSION: 0.1.1
 jobs:
   prepare:
     if: github.ref == 'refs/heads/main'

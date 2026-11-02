@@ -6,7 +6,7 @@
 - 官网：`https://vyskoyenebo.github.io/BasaltOS/`
 - 文档：`https://vyskoyenebo.github.io/BasaltOS/docs/QUICKSTART.html`
 - 签名仓库：`https://vyskoyenebo.github.io/BasaltOS/x86_64`
-- 公开版本：`https://github.com/VyskoyeNebo/BasaltOS/releases/tag/v0.1.0`
+- 公开版本：`https://github.com/VyskoyeNebo/BasaltOS/releases/tag/v0.1.1`
 
 ## 一个 Pages 站点
 
@@ -38,23 +38,23 @@ python -m http.server 8187 --bind 127.0.0.1 --directory out/preview
 ```
 
 然后访问 `http://127.0.0.1:8187/BasaltOS/`。输出目录存在时构建器拒绝覆盖，
-可选择新的 `out/` 子目录。构建需要本地经过验签的 M6 Release 小附件；
+可选择新的 `out/` 子目录。构建需要本地经过验签的 0.1.1 Release 小附件；
 CI 会先下载、验证并放到同样的工作目录。
 
-## 0.1.0 的系统来源
+## 当前 0.1.1 与首版来源
 
-`v0.1.0` 指向 M6 已验收提交 `c014311`，不重建 ISO。
-当前公开版本复用 M6 payload，原附件文件名和签名清单保持不变。
-M7 只改官网、文档及发布流程，不改已验证的系统配置。
+`v0.1.0` 指向 M6 已验收提交 `c014311`，作为首版完整保留。
+0.1.1 重新构建 ISO，补齐四个常用桌面入口并更新版本信息，使用新的签名清单和版本化附件。
+两版标签和附件各自独立，不覆盖或强推旧版本。详见 [0.1.1 验收](DESKTOP-FIX-0.1.1.md)。
 
 GitHub 单附件限制小于 2 GiB；本次 ISO 为 2.192 GiB，上传三个已验证分片。
-独立 `.sha256` 对应重组后的完整 ISO；`SHA256SUMS.asc` 继续认证原 M6 清单。
-`join-iso.py` 只是便捷源码工具，不在原 M6 签名清单中。
+独立 `.sha256` 对应重组后的完整 ISO；`SHA256SUMS.asc` 认证本次 0.1.1 清单。
+`join-iso.py` 只是便捷源码工具，不在签名清单中。
 
 ## 更新发布
 
 先审阅发行说明与签名身份，准备好本地附件，创建草稿并完成上传，再公开发布。
-本次 0.1.0 的当前部署状态和链接见 [M7 验收结果](M7-RESULTS.md)。
+首版部署记录见 [M7 验收结果](M7-RESULTS.md)，当前版本见 [0.1.1 验收](DESKTOP-FIX-0.1.1.md)。
 后续版本必须重新完成自己的构建、验签和验收，不能复用本次散列或把测试密钥称为生产密钥。
 维护者使用 M6 的 `scripts/release.sh` 准备附件；正式离线密钥和轮换流程仍需落实。
 

@@ -4,14 +4,14 @@
 
 [官网](https://vyskoyenebo.github.io/BasaltOS/) ·
 [文档](https://vyskoyenebo.github.io/BasaltOS/docs/QUICKSTART.html) ·
-[下载 0.1.0](https://github.com/VyskoyeNebo/BasaltOS/releases/tag/v0.1.0)
+[下载 0.1.1](https://github.com/VyskoyeNebo/BasaltOS/releases/tag/v0.1.1)
 
-**0.1.0 是首个公开版本，复用已经验收的 M6 镜像。** 当前使用测试签名身份，
-Secure Boot 尚未启用，硬件与游戏兼容范围见 [发行说明](docs/RELEASE-NOTES-0.1.0.md)。
+**0.1.1 是桌面入口修正版，新增计算机、回收站、文件管理器和控制面板。** 当前使用测试签名身份，
+Secure Boot 尚未启用，硬件与游戏兼容范围见 [发行说明](docs/RELEASE-NOTES-0.1.1.md)。
 
 ## 快速开始
 
-1. 从 [Release](https://github.com/VyskoyeNebo/BasaltOS/releases/tag/v0.1.0) 下载三个 ISO 分片、
+1. 从 [Release](https://github.com/VyskoyeNebo/BasaltOS/releases/tag/v0.1.1) 下载三个 ISO 分片、
    `SHA256SUMS`、`SHA256SUMS.asc`、公钥和 `.sha256` 文件。
 2. 核对公钥完整指纹并验证签名清单。用附件中的 `join-iso.py` 或 Linux 二进制拼接重组完整 ISO。
 3. 确认完整 ISO 的 SHA-256，再用镜像写盘工具写入空 U 盘。写盘会清空所选 U 盘，先核对盘符与容量。
@@ -20,19 +20,22 @@ Secure Boot 尚未启用，硬件与游戏兼容范围见 [发行说明](docs/RE
 Windows（需 Python）重组与校验示例：
 
 ```powershell
-python .\join-iso.py --release-dir . --version 0.1.0-m6 --output .\basaltos-0.1.0-m6-x86_64.iso
-Get-FileHash .\basaltos-0.1.0-m6-x86_64.iso -Algorithm SHA256
+python .\join-iso.py --release-dir . --version 0.1.1 --output .\basaltos-0.1.1-x86_64.iso
+Get-FileHash .\basaltos-0.1.1-x86_64.iso -Algorithm SHA256
 ```
 
 完整 ISO：2,353,299,456 bytes，SHA-256：
 
 ```text
-0fd12156f204a6b6535c19aca1ae0f229e8e8b02579772602e68530034a27281
+ca16fc6de24984b2ef05f20b56175ce6b699b07302ab146c3e10668aa5028905
 ```
 
 完整步骤、签名信任边界和安装注意事项见 [快速开始](docs/QUICKSTART.md)。
 
 ## 进度与文档
+
+0.1.1 修复常用桌面入口缺失，保留首版 0.1.0。详见 [0.1.1 验收记录](docs/DESKTOP-FIX-0.1.1.md)与[发行说明](docs/RELEASE-NOTES-0.1.1.md)。
+
 
 已完成 M1 命令行 Live ISO 与 M2 KDE Plasma 图形桌面、中文拼音输入。
 已完成 M3 Calamares 图形安装器、可选 LUKS2 加密、btrfs 子卷与 Snapper。
@@ -86,8 +89,9 @@ Live 桌面保留“安装 BasaltOS”图标。安装器默认中文、btrfs，�
 
 M1 原始 ISO 保留在 `out/`，M2–M6 分别位于 `out/m2/` 至 `out/m6/`，均不纳入 Git。
 历史构建文档分别对应 M1 提交 `7e4c075`、`m2-desktop`、`m3-installer`、`m4-gaming`；
-当前 profile 使用 M6 构建流程。为保留既有品牌文件，安装器页面仍沿用 M3 文案，
-`PRETTY_NAME` 仍为 BasaltOS M4；本次版本由 `m6-release` 标签和 ISO 校验值标识。
+当前 profile 继承 M6 构建流程，0.1.1 补齐桌面入口并更新版本说明。安装器页面仍沿用 M3 文案；
+`PRETTY_NAME` 为 BasaltOS 0.1.1，新版本由 `v0.1.1` 和本次 ISO 校验值标识。
+0.1.1 构建及 QEMU 验收命令见 [修正验收记录](docs/DESKTOP-FIX-0.1.1.md)。以下保留 M6 原有测试命令：
 Windows QEMU 首次启动 M6 Live ISO 并新建本项目测试盘：
 
 ```powershell

@@ -1,27 +1,27 @@
 # BasaltOS 快速开始
 
-BasaltOS 0.1.0 是首个公开版本，使用已经完成 M6 验收的 x86_64 ISO。
+BasaltOS 0.1.1 是首版的桌面入口修正版，使用新构建的 x86_64 ISO。
 它包含 KDE Plasma、Fcitx5 拼音与游戏工具，安装器支持可选 LUKS2 加密和 btrfs。
 完整镜像约 2.35 GB；**Secure Boot 当前未启用**，下载前请阅读
-[0.1.0 发行说明](RELEASE-NOTES-0.1.0.md)。
+[0.1.1 发行说明](RELEASE-NOTES-0.1.1.md)。
 
 ## 1. 下载附件
 
-从 [GitHub Release](https://github.com/VyskoyeNebo/BasaltOS/releases/tag/v0.1.0) 下载：
+从 [GitHub Release](https://github.com/VyskoyeNebo/BasaltOS/releases/tag/v0.1.1) 下载：
 
-- `basaltos-0.1.0-m6-x86_64.iso.part00`
-- `basaltos-0.1.0-m6-x86_64.iso.part01`
-- `basaltos-0.1.0-m6-x86_64.iso.part02`
+- `basaltos-0.1.1-x86_64.iso.part00`
+- `basaltos-0.1.1-x86_64.iso.part01`
+- `basaltos-0.1.1-x86_64.iso.part02`
 - `SHA256SUMS`、`SHA256SUMS.asc`、`basaltos-key.asc`
-- `basaltos-0.1.0-m6-x86_64.iso.sha256`
+- `basaltos-0.1.1-x86_64.iso.sha256`
 
-三个分片需要放在同一目录。它们保留 M6 文件名，以便直接核验已有的签名清单；
-本次公开 Release 版本为 0.1.0，系统镜像的内容没有变化。
+三个分片需要放在同一目录。它们使用本次 0.1.1 文件名和签名清单；
+本次公开 Release 版本为 0.1.1，包含四个新增桌面入口。
 下载较慢时可使用支持断点续传的下载工具，完成后再校验。
 
 ## 2. 校验签名、重组并检查 ISO {#verify}
 
-当前使用 **M6 测试签名身份**，主钥完整指纹为：
+当前使用 **既有 TEST Release 测试签名身份**，主钥完整指纹为：
 
 ```text
 29DAFB5537B451968276DA003941AA503494B8B1
@@ -41,34 +41,34 @@ gpg --verify SHA256SUMS.asc SHA256SUMS
 
 ### Windows：Python 重组
 
-从 Release 附件下载 `join-iso.py`，或从 [v0.1.0 源码](https://github.com/VyskoyeNebo/BasaltOS/blob/v0.1.0/scripts/join-iso.py)
+从 Release 附件下载 `join-iso.py`，或从 [v0.1.1 源码](https://github.com/VyskoyeNebo/BasaltOS/blob/v0.1.1/scripts/join-iso.py)
 取得同一工具。需要 Python 3.10 或更新版本，不需要第三方 Python 库。
 在附件所在目录打开 PowerShell：
 
 ```powershell
-python .\join-iso.py --release-dir . --version 0.1.0-m6 --output .\basaltos-0.1.0-m6-x86_64.iso
-Get-FileHash .\basaltos-0.1.0-m6-x86_64.iso -Algorithm SHA256
+python .\join-iso.py --release-dir . --version 0.1.1 --output .\basaltos-0.1.1-x86_64.iso
+Get-FileHash .\basaltos-0.1.1-x86_64.iso -Algorithm SHA256
 ```
 
 工具逐片校验，拒绝覆盖已有目标文件，最后校验完整 ISO。
-`join-iso.py` 是源码工具，不在 M6 的签名清单内，可对照上述版本化源码审阅；
+`join-iso.py` 是源码工具，不在 本次签名清单内，可对照上述版本化源码审阅；
 它不代替 GPG 验签。
 
 ### Linux：二进制拼接
 
 ```bash
 sha256sum --ignore-missing -c SHA256SUMS
-cat basaltos-0.1.0-m6-x86_64.iso.part00 \
-    basaltos-0.1.0-m6-x86_64.iso.part01 \
-    basaltos-0.1.0-m6-x86_64.iso.part02 \
-    > basaltos-0.1.0-m6-x86_64.iso
-sha256sum -c basaltos-0.1.0-m6-x86_64.iso.sha256
+cat basaltos-0.1.1-x86_64.iso.part00 \
+    basaltos-0.1.1-x86_64.iso.part01 \
+    basaltos-0.1.1-x86_64.iso.part02 \
+    > basaltos-0.1.1-x86_64.iso
+sha256sum -c basaltos-0.1.1-x86_64.iso.sha256
 ```
 
 完整 ISO 的预期 SHA-256：
 
 ```text
-0fd12156f204a6b6535c19aca1ae0f229e8e8b02579772602e68530034a27281
+ca16fc6de24984b2ef05f20b56175ce6b699b07302ab146c3e10668aa5028905
 ```
 
 完整大小：**2,353,299,456 bytes**。散列不一致时停止使用该文件，重新检查下载和分片顺序。
@@ -87,6 +87,8 @@ sha256sum -c basaltos-0.1.0-m6-x86_64.iso.sha256
 Live 登录账号：`gamer`，密码：`basaltos`。
 默认语言为 `zh_CN.UTF-8`，时区为 `Asia/Shanghai`，键盘为 `us`。
 Fcitx5 拼音通过 **Ctrl+Space** 切换中英文；若出现可选云拼音询问，可按自己的隐私偏好选择。
+
+桌面新增“计算机、回收站、文件管理器、控制面板”。Plasma 6 首次点选启动器可能需要确认信任，先核对来源和命令。
 
 ## 5. 安装到硬盘
 

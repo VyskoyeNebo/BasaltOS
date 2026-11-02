@@ -16,10 +16,10 @@ from markdown.extensions.toc import slugify_unicode
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT/'docs'
 REPOSITORY = 'https://github.com/VyskoyeNebo/BasaltOS'
-RELEASE = REPOSITORY+'/releases/tag/v0.1.0'
-SHA256 = '0fd12156f204a6b6535c19aca1ae0f229e8e8b02579772602e68530034a27281'
+RELEASE = REPOSITORY+'/releases/tag/v0.1.1'
+SHA256 = 'ca16fc6de24984b2ef05f20b56175ce6b699b07302ab146c3e10668aa5028905'
 GROUPS = [
-    ('开始使用', [('QUICKSTART','下载与安装'),('GAMING','游戏与 Proton'),('RELEASE-NOTES-0.1.0','0.1.0 发行说明')]),
+    ('开始使用', [('QUICKSTART','下载与安装'),('GAMING','游戏与 Proton'),('RELEASE-NOTES-0.1.1','0.1.1 发行说明'),('DESKTOP-FIX-0.1.1','桌面入口修正验收')]),
     ('安全与维护', [('SECURITY','防火墙、更新与恢复'),('PRIVACY','隐私与联网'),('SECUREBOOT','Secure Boot'),('RELEASE','签名与仓库基础（M6）'),('PUBLISHING','官网与公开发版')]),
     ('构建文档', [('BUILD','M1 构建'),('BUILD-M2','M2 KDE 桌面'),('BUILD-M3','M3 安装器'),('BUILD-M4','M4 游戏套件'),('BUILD-M5','M5 安全加固'),('ENV-NOTES','构建环境记录'),('UPSTREAM','上游来源')]),
     ('验证记录', [(f'M{i}-RESULTS',f'M{i} 验收结果') for i in range(1,8)])
@@ -53,14 +53,14 @@ shutil.copytree(DOCS/'site/assets', output/'assets')
 sources = {p.resolve(): 'docs/'+p.stem+'.html' for p in sorted(DOCS.glob('*.md'))}
 allowed = set(subprocess.check_output(['git','ls-files','--cached','--others','--exclude-standard'], cwd=ROOT, text=True).splitlines())
 fingerprint = (ROOT/'packaging/basaltos-key.fingerprint').read_text(encoding='ascii').strip()
-download_source = ROOT/'out/releases/0.1.0-m6'
+download_source = ROOT/'out/releases/0.1.1'
 for name in ('basaltos-key.asc','SHA256SUMS','SHA256SUMS.asc'):
     source = download_source/name if (download_source/name).exists() else ROOT/'packaging'/name
     if not source.exists():
         raise SystemExit(f'Missing verified release metadata: {name}')
     shutil.copyfile(source, output/'downloads'/name)
 shutil.copyfile(ROOT/'scripts/join-iso.py', output/'downloads/join-iso.py')
-(output/'downloads/basaltos-0.1.0-m6-x86_64.iso.sha256').write_text(SHA256+'  basaltos-0.1.0-m6-x86_64.iso\n', encoding='ascii')
+(output/'downloads/basaltos-0.1.1-x86_64.iso.sha256').write_text(SHA256+'  basaltos-0.1.1-x86_64.iso\n', encoding='ascii')
 
 def head():
     return f'''<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,10 +68,10 @@ def head():
 <link rel="icon" href="{base}assets/mark.svg" type="image/svg+xml"><link rel="stylesheet" href="{base}assets/site.css"><script src="{base}assets/site.js" defer></script>'''
 
 def header():
-    return f'''<a class="skip" href="#main">跳到正文</a><header class="header"><div class="wrap header-inner"><a class="brand" href="{base}"><img src="{base}assets/mark.svg" alt="" width="31" height="34">BasaltOS</a><nav class="nav" aria-label="主导航"><a href="{base}#features" class="optional">系统特性</a><a href="{base}docs/QUICKSTART.html">文档</a><a href="{REPOSITORY}" class="optional">源代码 ↗</a><a href="{RELEASE}" class="nav-download">下载 0.1.0 ↗</a></nav></div></header>'''
+    return f'''<a class="skip" href="#main">跳到正文</a><header class="header"><div class="wrap header-inner"><a class="brand" href="{base}"><img src="{base}assets/mark.svg" alt="" width="31" height="34">BasaltOS</a><nav class="nav" aria-label="主导航"><a href="{base}#features" class="optional">系统特性</a><a href="{base}docs/QUICKSTART.html">文档</a><a href="{REPOSITORY}" class="optional">源代码 ↗</a><a href="{RELEASE}" class="nav-download">下载 0.1.1 ↗</a></nav></div></header>'''
 
 def footer():
-    return f'''<footer class="footer"><div class="wrap footer-inner"><span>BasaltOS · Arch Linux + KDE Plasma · 独立发行版项目</span><div><a href="{base}docs/PRIVACY.html">隐私</a><a href="{base}docs/RELEASE-NOTES-0.1.0.html">已知限制</a><a href="{REPOSITORY}">GitHub ↗</a></div></div></footer>'''
+    return f'''<footer class="footer"><div class="wrap footer-inner"><span>BasaltOS · Arch Linux + KDE Plasma · 独立发行版项目</span><div><a href="{base}docs/PRIVACY.html">隐私</a><a href="{base}docs/RELEASE-NOTES-0.1.1.html">已知限制</a><a href="{REPOSITORY}">GitHub ↗</a></div></div></footer>'''
 
 def sidebar(current):
     parts = [f'<aside class="sidebar" id="docs-menu" aria-label="文档目录"><div class="search-box"><label class="small" for="doc-search">搜索文档</label><input id="doc-search" type="search" placeholder="输入关键词（至少两个字符）" data-search="{base}search-index.json" autocomplete="off"><div class="search-results" aria-live="polite"></div></div>']
@@ -136,7 +136,7 @@ for source, destination in sources.items():
     content = ''.join(rewriter.parts)
     historical = ''
     if re.match(r'(?:M[1-6]-RESULTS|BUILD(?:-M[2-5])?|RELEASE)$', source.stem):
-        historical = f'<div class="historical">这份文档保留对应里程碑的原始记录，部分路径与地址属于当时的本地环境。当前公开版请先阅读<a href="{base}docs/QUICKSTART.html">快速开始</a>与<a href="{base}docs/RELEASE-NOTES-0.1.0.html">0.1.0 发行说明</a>。</div>'
+        historical = f'<div class="historical">这份文档保留对应里程碑的原始记录，部分路径与地址属于当时的本地环境。当前公开版请先阅读<a href="{base}docs/QUICKSTART.html">快速开始</a>与<a href="{base}docs/RELEASE-NOTES-0.1.1.html">0.1.1 发行说明</a>。</div>'
     if source.stem == 'SECURITY':
         historical = f'<div class="historical">本页保留 M5 安全与恢复记录。M6 起已为原 Calamares 包补充测试签名，本次发布采用严格验签流程；下文“构建时例外”描述的是 M5 当时的构建方式。当前签名与仓库状态见<a href="{base}docs/RELEASE.html">M6 发布流程</a>及<a href="{base}docs/PUBLISHING.html">公开发版维护</a>。</div>'
     toc = renderer.toc if len(renderer.toc_tokens)>0 and renderer.toc != '<div class="toc">\n<ul></ul>\n</div>\n' else ''
