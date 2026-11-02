@@ -104,5 +104,9 @@ else:
         command('send-key', {'keys': [{'type': 'qcode', 'data': key} for key in keys], 'hold-time': 20})
         time.sleep(0.05)
     print('Command typed into the real VGA console.')
+# QMP acknowledges injection before the guest processes it. Let the last key
+# release reach Qt before a subsequent command changes focus or selects text.
+if args.action in ('type', 'key', 'click'):
+    time.sleep(0.4)
 stream.close()
 connection.close()

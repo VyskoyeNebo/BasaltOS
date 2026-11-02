@@ -52,7 +52,7 @@ write('airootfs/etc/systemd/system/NetworkManager.service.d/90-basaltos-firewall
 Requires=nftables.service
 After=nftables.service
 ''')
-write('airootfs/etc/systemd/resolved.conf.d/90-basaltos-security.conf', '''[Resolve]
+write('airootfs/etc/systemd/resolved.conf.d/zz-basaltos-security.conf', '''[Resolve]
 LLMNR=no
 MulticastDNS=no
 ''')
@@ -113,7 +113,7 @@ links.update({
 })
 for name, target in links.items():
     if not (profile/name).exists() and not (profile/name).is_symlink():
-        write(name, target+'\n')
+        write(name, target)
 (root/'scripts/profile-symlinks.json').write_text(json.dumps(links, indent=2)+'\n', newline='\n')
 text = (profile/'profiledef.sh').read_text().replace('M4 Gaming Live ISO', 'M5 Security Live ISO')
 text = text.replace('file_permissions=(\n', 'file_permissions=(\n  ["/usr/bin/basaltos-update"]="0:0:755"\n')

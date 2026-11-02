@@ -13,7 +13,7 @@ M4 实测曾出现 Steam 自带的崩溃上传行为，因此不能声称“整�
 | 组件 | 用途与默认状态 | 控制方式 |
 | --- | --- | --- |
 | NetworkManager / iwd | DHCP、Wi-Fi、网络连接 | KDE 网络面板关闭网络，或 `sudo systemctl stop NetworkManager`；会断网 |
-| systemd-resolved | DNS 解析，只绑定本地 stub；LLMNR/mDNS 关闭 | 配置 `/etc/systemd/resolved.conf.d/90-basaltos-security.conf`；停服务会影响域名解析 |
+| systemd-resolved | DNS 解析，只绑定本地 stub；LLMNR/mDNS 关闭 | 配置 `/etc/systemd/resolved.conf.d/zz-basaltos-security.conf`；停服务会影响域名解析 |
 | avahi | 服务与 socket 已 mask，未做局域网发现 | 保持屏蔽；有需要再明确解除并配置防火墙 |
 | systemd-timesyncd | 联网校时，保证 TLS/包签名时间正常 | `sudo timedatectl set-ntp false`；注意手动校时 |
 | NetworkManager 连通性探测 | 关闭，不自动访问探测页面 | `/etc/NetworkManager/conf.d/90-basaltos-privacy.conf` |
