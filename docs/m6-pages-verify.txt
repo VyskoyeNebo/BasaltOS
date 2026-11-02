@@ -1,0 +1,55 @@
+gpg: keybox '/tmp/basaltos-pages-h_62f64f/pubring.kbx' created
+gpg: /tmp/basaltos-pages-h_62f64f/trustdb.gpg: trustdb created
+gpg: key 3941AA503494B8B1: public key "BasaltOS TEST Release <basaltos-release@basaltos.local>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+gpg: Signature made Mon Nov  2 20:58:35 2026 CST
+gpg:                using EDDSA key 9D912C7E6F4DF3D23A8B14BB3C1B8918CCCAA8D5
+gpg: Good signature from "BasaltOS TEST Release <basaltos-release@basaltos.local>" [unknown]
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 29DA FB55 37B4 5196 8276  DA00 3941 AA50 3494 B8B1
+     Subkey fingerprint: 9D91 2C7E 6F4D F3D2 3A8B  14BB 3C1B 8918 CCCA A8D5
+gpg: Signature made Mon Nov  2 20:37:30 2026 CST
+gpg:                using EDDSA key 9D912C7E6F4DF3D23A8B14BB3C1B8918CCCAA8D5
+gpg: Good signature from "BasaltOS TEST Release <basaltos-release@basaltos.local>" [unknown]
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 29DA FB55 37B4 5196 8276  DA00 3941 AA50 3494 B8B1
+     Subkey fingerprint: 9D91 2C7E 6F4D F3D2 3A8B  14BB 3C1B 8918 CCCA A8D5
+gpg: Signature made Mon Nov  2 20:37:30 2026 CST
+gpg:                using EDDSA key 9D912C7E6F4DF3D23A8B14BB3C1B8918CCCAA8D5
+gpg: Good signature from "BasaltOS TEST Release <basaltos-release@basaltos.local>" [unknown]
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 29DA FB55 37B4 5196 8276  DA00 3941 AA50 3494 B8B1
+     Subkey fingerprint: 9D91 2C7E 6F4D F3D2 3A8B  14BB 3C1B 8918 CCCA A8D5
+gpg: Signature made Mon Nov  2 20:37:30 2026 CST
+gpg:                using EDDSA key 9D912C7E6F4DF3D23A8B14BB3C1B8918CCCAA8D5
+gpg: Good signature from "BasaltOS TEST Release <basaltos-release@basaltos.local>" [unknown]
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 29DA FB55 37B4 5196 8276  DA00 3941 AA50 3494 B8B1
+     Subkey fingerprint: 9D91 2C7E 6F4D F3D2 3A8B  14BB 3C1B 8918 CCCA A8D5
+gpg: Signature made Mon Nov  2 20:37:30 2026 CST
+gpg:                using EDDSA key 9D912C7E6F4DF3D23A8B14BB3C1B8918CCCAA8D5
+gpg: Good signature from "BasaltOS TEST Release <basaltos-release@basaltos.local>" [unknown]
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 29DA FB55 37B4 5196 8276  DA00 3941 AA50 3494 B8B1
+     Subkey fingerprint: 9D91 2C7E 6F4D F3D2 3A8B  14BB 3C1B 8918 CCCA A8D5
+gpg: Signature made Mon Nov  2 20:37:29 2026 CST
+gpg:                using EDDSA key 9D912C7E6F4DF3D23A8B14BB3C1B8918CCCAA8D5
+gpg: Good signature from "BasaltOS TEST Release <basaltos-release@basaltos.local>" [unknown]
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 29DA FB55 37B4 5196 8276  DA00 3941 AA50 3494 B8B1
+     Subkey fingerprint: 9D91 2C7E 6F4D F3D2 3A8B  14BB 3C1B 8918 CCCA A8D5
+gpg: Signature made Mon Nov  2 20:37:29 2026 CST
+gpg:                using EDDSA key 9D912C7E6F4DF3D23A8B14BB3C1B8918CCCAA8D5
+gpg: Good signature from "BasaltOS TEST Release <basaltos-release@basaltos.local>" [unknown]
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 29DA FB55 37B4 5196 8276  DA00 3941 AA50 3494 B8B1
+     Subkey fingerprint: 9D91 2C7E 6F4D F3D2 3A8B  14BB 3C1B 8918 CCCA A8D5
+Verified Pages content prepared: /root/BasaltOS/work/m4-native/pages-m6-split

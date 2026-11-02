@@ -8,8 +8,13 @@ M3 ISO 已完成完整 GUI 安装，并通过 UEFI、BIOS 硬盘启动与 KDE �
 Lutris 主界面和 Gamescope 嵌套窗口均通过最终 ISO 的 QEMU 验收。
 M5 加入默认拒绝入站的 nftables、严格本地包签名、快照与 boot 备份更新工具，
 以及每周只提醒的更新检查和隐私默认设置。最终验收记录见下方 M5 文档。
+M6 加入测试 GPG 签名、自建 pacman 仓库、`--check-only` 与离线签名发布附件流程。
+自建仓库默认关闭，GitHub Pages 地址暂为占位，本轮不公开上传或部署。
 
-- 当前 M5 构建与启动：[`docs/BUILD-M5.md`](docs/BUILD-M5.md)
+- 当前 M6 构建、仓库与发版：[`docs/RELEASE.md`](docs/RELEASE.md)
+- M6 产物与验证证据：[`docs/M6-RESULTS.md`](docs/M6-RESULTS.md)
+- 测试公钥：[`packaging/basaltos-key.asc`](packaging/basaltos-key.asc)
+- M5 构建与启动：[`docs/BUILD-M5.md`](docs/BUILD-M5.md)
 - M5 产物、截图与验收：[`docs/M5-RESULTS.md`](docs/M5-RESULTS.md)
 - 防火墙、更新与恢复：[`docs/SECURITY.md`](docs/SECURITY.md)
 - 隐私与第三方联网：[`docs/PRIVACY.md`](docs/PRIVACY.md)
@@ -28,7 +33,7 @@ M5 加入默认拒绝入站的 nftables、严格本地包签名、快照与 boot
 - archiso 配置：`profile/`
 - ISO 产物：`out/`，不纳入 Git。
 
-M5 Live 从 SDDM 登录：账号 **gamer**，密码 **basaltos**。进入 Plasma Wayland 桌面，
+M6 Live 从 SDDM 登录：账号 **gamer**，密码 **basaltos**。进入 Plasma Wayland 桌面，
 使用 KDE 官方 Breeze 登录主题、Breeze Light 桌面与 Next 壁纸。
 默认语言 `zh_CN.UTF-8`、时区 `Asia/Shanghai`、键盘 `us`，延续 M1 配置。
 
@@ -43,19 +48,19 @@ Live 桌面保留“安装 BasaltOS”图标。安装器默认中文、btrfs，�
 可勾选 LUKS2 加密。自动擦除布局保留明文 ESP 与 `/boot`，系统和 home 位于加密卷内；
 安装后使用自定义账号登录。根目录与 home 均有独立 Snapper 配置，snap-pac 管理软件包事务快照。
 
-M1 原始 ISO 保留在 `out/`，M2–M5 分别位于 `out/m2/` 至 `out/m5/`，均不纳入 Git。
+M1 原始 ISO 保留在 `out/`，M2–M6 分别位于 `out/m2/` 至 `out/m6/`，均不纳入 Git。
 历史构建文档分别对应 M1 提交 `7e4c075`、`m2-desktop`、`m3-installer`、`m4-gaming`；
-当前 profile 使用 M5 构建流程。为保留既有品牌文件，安装器页面仍沿用 M3 文案，
-`PRETTY_NAME` 仍为 BasaltOS M4；本次安全层版本由 `m5-security` 标签和 ISO 校验值标识。
-Windows QEMU 首次启动 M5 Live ISO 并新建本项目测试盘：
+当前 profile 使用 M6 构建流程。为保留既有品牌文件，安装器页面仍沿用 M3 文案，
+`PRETTY_NAME` 仍为 BasaltOS M4；本次版本由 `m6-release` 标签和 ISO 校验值标识。
+Windows QEMU 首次启动 M6 Live ISO 并新建本项目测试盘：
 
 ```powershell
 Set-Location E:\BasaltOS
-.\scripts\start-m5-qemu.ps1 -Boot live -Firmware uefi -Accelerator whpx -CreateDisk
+.\scripts\start-m6-qemu.ps1 -Boot live -Firmware uefi -Accelerator whpx -CreateDisk
 ```
 
 已有测试盘时去掉 `-CreateDisk`；安装后正常关机，使用 `-Boot disk` 从硬盘启动。
-M5 测试盘位于 `work/m5/`，不附加其他系统盘。M4 启动脚本仍可用于无硬盘游戏验收，
+M6 测试盘位于 `work/m6/`，不附加其他系统盘。M4 启动脚本仍可用于无硬盘游戏验收，
 M3 旧测试盘继续保存在 `work/m3/`，历史构建工作盘和测试文件均位于本项目 `work/`。
 
 首次使用可运行 `python scripts/setup-qemu-windows.py` 准备项目内便携 QEMU。

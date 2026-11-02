@@ -1,0 +1,54 @@
+name: Publish signed pacman repository to Pages
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Reviewed published Release tag (for example 0.1.0-m6)
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: basaltos-pages
+  cancel-in-progress: false
+jobs:
+  prepare:
+    if: github.ref == 'refs/heads/gh-pages'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Download reviewed offline-signed assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ inputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-z0-9.]+)?$ ]]
+          mkdir release-assets
+          gh release download "$VERSION" --dir release-assets --pattern "pacman-repo-$VERSION.tar.gz" --pattern SHA256SUMS --pattern SHA256SUMS.asc --pattern basaltos-key.asc
+          python3 scripts/prepare-pages.py --version "$VERSION" --release-dir release-assets --output site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+  deploy:
+    needs: prepare
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy verified repository
+        id: deployment
+        uses: actions/deploy-pages@v4

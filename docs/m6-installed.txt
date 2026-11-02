@@ -1,0 +1,172 @@
+=== M6 INSTALLED ENVIRONMENT ===
+basaltos
+System Locale: LANG=zh_CN.UTF-8
+    VC Keymap: us
+   X11 Layout: us
+               Local time: Mon 2026-11-02 21:05:05 CST
+           Universal time: Mon 2026-11-02 13:05:05 UTC
+                 RTC time: Mon 2026-11-02 13:05:05
+                Time zone: Asia/Shanghai (CST, +0800)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no
+NAME                                          FSTYPE       SIZE MOUNTPOINTS
+sr0                                                       1024M
+vda                                                         48G
+├─vda1                                        vfat         512M /boot/efi
+├─vda2                                                       8M
+├─vda3                                        ext4         1.5G /boot
+└─vda4                                        crypto_LUKS   46G
+  └─luks-b4b04390-25c7-45df-a399-546ff4d20d6d btrfs         46G /var/log
+                                                                /home
+                                                                /var/cache
+                                                                /
+active
+active
+● basaltos-keyring.service - Trust the pinned BasaltOS test release public key
+     Loaded: loaded (/etc/systemd/system/basaltos-keyring.service; enabled; preset: disabled)
+     Active: active (exited) since Mon 2026-11-02 21:03:31 CST; 1min 33s ago
+ Invocation: f037911cd6254dbc93fcaa8fc121ebda
+    Process: 523 ExecStart=/usr/lib/basaltos/init-keyring.sh (code=exited, status=0/SUCCESS)
+   Main PID: 523 (code=exited, status=0/SUCCESS)
+   Mem peak: 12.9M
+        CPU: 2.335s
+
+Nov 02 21:03:31 basaltos init-keyring.sh[724]: gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+Nov 02 21:03:31 basaltos init-keyring.sh[724]: gpg: 深度：0  有效性：  1  已签名：  6  信任度：0-，0q，0n，0m，0f，1u
+Nov 02 21:03:31 basaltos init-keyring.sh[724]: gpg: 深度：1  有效性：  6  已签名： 88  信任度：1-，0q，0n，5m，0f，0u
+Nov 02 21:03:31 basaltos init-keyring.sh[724]: gpg: 深度：2  有效性： 78  已签名： 18  信任度：78-，0q，0n，0m，0f，0u
+Nov 02 21:03:31 basaltos init-keyring.sh[724]: gpg: 下次信任度数据库检查将于 2026-12-31 进行
+Nov 02 21:03:31 basaltos init-keyring.sh[727]: pub   ed25519 2026-11-02 [C] [有效至：2027-05-01]
+Nov 02 21:03:31 basaltos init-keyring.sh[727]:       29DA FB55 37B4 5196 8276  DA00 3941 AA50 3494 B8B1
+Nov 02 21:03:31 basaltos init-keyring.sh[727]: uid             [ 完全 ] BasaltOS TEST Release <basaltos-release@basaltos.local>
+Nov 02 21:03:31 basaltos init-keyring.sh[727]: sub   ed25519 2026-11-02 [S] [有效至：2027-05-01]
+Nov 02 21:03:31 basaltos systemd[1]: Finished Trust the pinned BasaltOS test release public key.
+pub   ed25519 2026-11-02 [C] [expires: 2027-05-01]
+      29DA FB55 37B4 5196 8276  DA00 3941 AA50 3494 B8B1
+uid           [  full  ] BasaltOS TEST Release <basaltos-release@basaltos.local>
+sub   ed25519 2026-11-02 [S] [expires: 2027-05-01]
+
+=== ENABLE STRICT SIGNED REPOSITORY ===
+BasaltOS repository enabled; signature checks remain Required.
+SigLevel = PackageRequired
+SigLevel = PackageTrustedOnly
+SigLevel = DatabaseRequired
+SigLevel = DatabaseTrustedOnly
+Server = http://10.0.2.2:8181/repo/x86_64
+=== CHECK-ONLY MUST NOT CHANGE SYSTEM STATE ===
+BasaltOS check-only: core, extra, multilib, basaltos
+:: Synchronizing package databases...
+ core downloading...
+ extra downloading...
+ multilib downloading...
+ basaltos downloading...
+Check complete: 0 updates; no packages installed, no snapshots created.
+Real pacman databases and keyring were not changed.
+PASS: real pacman/keyring files and root/home snapshot lists unchanged.
+=== TAMPERED DATABASE MUST FAIL ===
+BasaltOS check-only: core, extra, multilib, basaltos
+:: Synchronizing package databases...
+ core downloading...
+ extra downloading...
+ multilib downloading...
+ basaltos downloading...
+error: basaltos: signature from "BasaltOS TEST Release <basaltos-release@basaltos.local>" is invalid
+error: failed to synchronize all databases (invalid or corrupted database (PGP signature))
+basaltos-update --check-only: Command '['fakeroot', '--', 'pacman', '--disable-sandbox-filesystem', '--config', '/etc/pacman.conf', '--dbpath', '/tmp/basaltos-check-only-_xfh_xm6/db', '--gpgdir', '/tmp/basaltos-check-only-_xfh_xm6/gnupg', '--logfile', '/dev/null', '-Sy', '--noconfirm']' returned non-zero exit status 1.
+PASS: tampered repository rejected; real repository configuration unchanged.
+=== M5 SNAPSHOT AND BOOT BACKUP REGRESSION ===
+Transaction: 20261102T130519Z-b2912f87
+Snapper root pre: 2
+warning: database file for 'core' does not exist (use '-Sy' to download)
+warning: database file for 'extra' does not exist (use '-Sy' to download)
+warning: database file for 'multilib' does not exist (use '-Sy' to download)
+warning: database file for 'basaltos' does not exist (use '-Sy' to download)
+Update check: 0 available; no packages installed.
+warning: database file for 'core' does not exist (use '-Sy' to download)
+warning: database file for 'extra' does not exist (use '-Sy' to download)
+warning: database file for 'multilib' does not exist (use '-Sy' to download)
+warning: database file for 'basaltos' does not exist (use '-Sy' to download)
+Snapper root post: 3
+Boot backup SHA-256: b8529fe5a01857b61747b07efc78431636e8159a96669c69ef857b2c57099b4e
+Result: dry-run-complete
+Offline recovery instructions: sudo basaltos-update --recovery-info 20261102T130519Z-b2912f87
+Snapshots and boot archives are retained; remove them manually only after verifying the system.
+=== PACMAN FULL SYNC/UPGRADE AND SIGNED DEMO INSTALL ===
+:: Synchronizing package databases...
+ core downloading...
+ extra downloading...
+ multilib downloading...
+ basaltos downloading...
+:: Starting full system upgrade...
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (1) basaltos-release-0.1.0_m6-1
+
+Total Download Size:   0.00 MiB
+Total Installed Size:  0.00 MiB
+
+:: Proceed with installation? [Y/n]
+:: Retrieving packages...
+ basaltos-release-0.1.0_m6-1-any downloading...
+checking keyring...
+checking package integrity...
+loading package files...
+checking for file conflicts...
+:: Running pre-transaction hooks...
+(1/1) Performing snapper pre snapshots for the following configurations...
+==> root: 4
+:: Processing package changes...
+installing basaltos-release...
+:: Running post-transaction hooks...
+(1/2) Arming ConditionNeedsUpdate...
+(2/2) Performing snapper post snapshots for the following configurations...
+==> root: 5
+basaltos-release 0.1.0_m6-1
+BasaltOS 0.1.0-m6
+Test release; not a production signing identity.
+==> Checking /tmp/m6-basaltos.db.sig... (detached)
+gpg: Signature made Mon Nov  2 20:37:30 2026 CST
+gpg:                using EDDSA key 9D912C7E6F4DF3D23A8B14BB3C1B8918CCCAA8D5
+gpg: Good signature from "BasaltOS TEST Release <basaltos-release@basaltos.local>" [full]
+=== FINAL CHECK-ONLY ===
+BasaltOS check-only: core, extra, multilib, basaltos
+:: Synchronizing package databases...
+ core downloading...
+ extra downloading...
+ multilib downloading...
+ basaltos downloading...
+Check complete: 0 updates; no packages installed, no snapshots created.
+Real pacman databases and keyring were not changed.
+table inet basaltos_filter {
+	chain input {
+		type filter hook input priority filter; policy drop;
+		iifname "lo" accept
+		ct state established,related accept
+		meta l4proto { icmp, ipv6-icmp } accept
+		meta nfproto ipv4 udp sport 67 udp dport 68 accept
+		meta nfproto ipv6 udp sport 547 udp dport 546 accept
+		ct state invalid drop
+		counter packets 0 bytes 0 drop
+	}
+
+	chain output {
+		type filter hook output priority filter; policy accept;
+	}
+}
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+LISTEN 0      4096      127.0.0.54:53        0.0.0.0:*    users:(("systemd-resolve",pid=422,fd=19))
+LISTEN 0      4096   127.0.0.53%lo:53        0.0.0.0:*    users:(("systemd-resolve",pid=422,fd=17))
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+UNCONN 0      0         127.0.0.54:53        0.0.0.0:*    users:(("systemd-resolve",pid=422,fd=18))
+UNCONN 0      0      127.0.0.53%lo:53        0.0.0.0:*    users:(("systemd-resolve",pid=422,fd=16))
+# │ Type   │ Pre # │ Description
+──┼────────┼───────┼───────────────────────────────────────────────
+0 │ single │       │ current
+1 │ single │       │ BasaltOS M3 initial installation
+2 │ pre    │       │ BasaltOS update 20261102T130519Z-b2912f87 pre
+3 │ post   │     2 │ BasaltOS update 20261102T130519Z-b2912f87 post
+4 │ pre    │       │ pacman -Syu --noconfirm basaltos-release
+5 │ post   │     4 │ basaltos-release
+=== M6_INSTALLED_ACCEPTANCE_DONE ===
