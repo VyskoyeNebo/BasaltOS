@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=BasaltOS 更新提醒
+Exec=/usr/bin/python /usr/lib/basaltos/update-notifier.py
+Icon=system-software-update
+OnlyShowIn=KDE;
+X-KDE-autostart-phase=2

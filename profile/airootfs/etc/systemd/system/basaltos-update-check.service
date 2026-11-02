@@ -1,0 +1,19 @@
+[Unit]
+Description=Check Arch updates without installing packages
+Wants=network-online.target
+After=network-online.target
+ConditionPathExists=!/run/archiso/bootmnt
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python /usr/lib/basaltos/check-updates.py
+CacheDirectory=basaltos-update-check
+StateDirectory=basaltos-update-check
+UMask=0022
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+# GnuPG may lock/update trust while verifying repository signatures.
+ReadWritePaths=-/etc/pacman.d/gnupg
+TimeoutStartSec=10min

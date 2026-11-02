@@ -83,3 +83,8 @@ winetricks
 vulkan-tools
 mesa-utils
 python-protobuf
+nftables
+archlinux-keyring
+pacman-contrib
+fakeroot
+libnotify

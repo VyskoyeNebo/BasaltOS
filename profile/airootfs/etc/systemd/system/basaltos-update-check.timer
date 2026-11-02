@@ -1,0 +1,11 @@
+[Unit]
+Description=Weekly update notification (never automatic installation)
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+RandomizedDelaySec=30min
+Unit=basaltos-update-check.service
+
+[Install]
+WantedBy=timers.target

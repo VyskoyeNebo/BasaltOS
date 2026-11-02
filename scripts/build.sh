@@ -14,6 +14,11 @@ run_dir="$(mktemp -d "${build_root}/${milestone}.XXXXXXXX")"
 python "$project_dir/scripts/stage-profile.py" "$run_dir/profile"
 if [[ -n "${BASALT_LOCAL_REPO:-}" ]]; then
     [[ -f "$BASALT_LOCAL_REPO/basaltos-local.db" ]] || { echo 'Local package repository is missing.' >&2; exit 1; }
+    if [[ "$milestone" == m5 ]]; then
+        (cd "$BASALT_LOCAL_REPO" && printf '%s  %s\n' \
+            962127440180c43f8b8752174de190c9e29c364178acbe1bd406003580e40f81 \
+            calamares-3.4.3-1-x86_64.pkg.tar.zst | sha256sum -c -)
+    fi
     printf '\n[basaltos-local]\nSigLevel = Optional TrustAll\nServer = file://%s\n' "$BASALT_LOCAL_REPO" >> "$run_dir/profile/pacman.conf"
 fi
 echo "Build workspace: $run_dir"
@@ -28,8 +33,8 @@ iso="${images[0]}"
 if [[ "$milestone" == m2 || "$milestone" == m3 ]] && (( $(stat -c %s "$iso") >= 4000000000 )); then
     echo "$milestone ISO exceeds the 4 GB target." >&2; exit 1
 fi
-if [[ "$milestone" == m4 ]] && (( $(stat -c %s "$iso") >= 8000000000 )); then
-    echo 'M4 ISO exceeds the 8 GB target.' >&2; exit 1
+if [[ "$milestone" == m4 || "$milestone" == m5 ]] && (( $(stat -c %s "$iso") >= 8000000000 )); then
+    echo "$milestone ISO exceeds the 8 GB target." >&2; exit 1
 fi
 python - "$iso" <<'PY'
 from pathlib import Path

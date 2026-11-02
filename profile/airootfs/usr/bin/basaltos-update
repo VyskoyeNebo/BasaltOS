@@ -1,0 +1,3 @@
+#!/usr/bin/python
+import runpy
+runpy.run_path('/usr/lib/basaltos/update.py', run_name='__main__')
