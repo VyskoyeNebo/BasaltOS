@@ -1,19 +1,27 @@
-name: Publish signed pacman repository to Pages
+name: Publish BasaltOS website and signed repository
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: Reviewed published Release tag (for example 0.1.0-m6)
-        required: true
-        type: string
+  push:
+    branches: [main]
+    paths:
+      - docs/**
+      - packaging/basaltos-key.*
+      - scripts/build-site.py
+      - scripts/check-site.py
+      - scripts/prepare-pages.py
+      - scripts/join-iso.py
+      - .github/workflows/publish-pages.yml
 permissions:
   contents: read
 concurrency:
   group: basaltos-pages
   cancel-in-progress: false
+env:
+  RELEASE_TAG: v0.1.0
+  PAYLOAD_VERSION: 0.1.0-m6
 jobs:
   prepare:
-    if: github.ref == 'refs/heads/gh-pages'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -22,22 +30,27 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-      - name: Download reviewed offline-signed assets
+      - name: Download and verify published offline-signed repository
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          VERSION: ${{ inputs.version }}
         shell: bash
         run: |
           set -euo pipefail
-          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-z0-9.]+)?$ ]]
-          mkdir release-assets
-          gh release download "$VERSION" --dir release-assets --pattern "pacman-repo-$VERSION.tar.gz" --pattern SHA256SUMS --pattern SHA256SUMS.asc --pattern basaltos-key.asc
-          python3 scripts/prepare-pages.py --version "$VERSION" --release-dir release-assets --output site
+          mkdir -p "out/releases/$PAYLOAD_VERSION"
+          gh release download "$RELEASE_TAG" --dir "out/releases/$PAYLOAD_VERSION" --pattern "pacman-repo-$PAYLOAD_VERSION.tar.gz" --pattern SHA256SUMS --pattern SHA256SUMS.asc --pattern basaltos-key.asc
+          python3 scripts/prepare-pages.py --version "$PAYLOAD_VERSION" --release-dir "out/releases/$PAYLOAD_VERSION" --output out/verified-repo
+      - name: Build and check local-resource website
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check -r docs/site/requirements.txt --index-url https://pypi.tuna.tsinghua.edu.cn/simple
+          python3 scripts/build-site.py --output out/site --repository-dir out/verified-repo/x86_64
+          python3 scripts/check-site.py --site out/site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:
-          path: site
+          path: out/site
   deploy:
     needs: prepare
     runs-on: ubuntu-latest
@@ -49,6 +62,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy verified repository
+      - name: Deploy website, documentation and verified repository
         id: deployment
         uses: actions/deploy-pages@v4

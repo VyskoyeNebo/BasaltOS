@@ -28,6 +28,7 @@ GROUPS = [
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--output', type=Path, required=True)
 parser.add_argument('--base-path', default='/BasaltOS/')
+parser.add_argument('--repository-dir', type=Path, help='Previously verified x86_64 repository directory')
 args = parser.parse_args()
 output = args.output.resolve()
 if not output.is_relative_to(ROOT/'out'):
@@ -36,6 +37,16 @@ if output.exists():
     parser.error('Output already exists; choose a new directory')
 base = '/'+args.base_path.strip('/')+'/' if args.base_path.strip('/') else '/'
 output.mkdir(parents=True)
+if args.repository_dir:
+    repository = args.repository_dir.resolve(strict=True)
+    if repository.name != 'x86_64' or not repository.is_relative_to(ROOT/'out'):
+        parser.error('Repository must be a verified x86_64 directory inside project out/')
+    if not repository.is_dir() or any(p.is_symlink() or not p.is_file() for p in repository.iterdir()):
+        parser.error('Repository must contain regular files only')
+    for required in ('basaltos.db', 'basaltos.db.sig', 'basaltos.files', 'basaltos.files.sig'):
+        if not (repository/required).is_file():
+            parser.error(f'Missing signed repository metadata: {required}')
+    shutil.copytree(repository, output/'x86_64')
 (output/'docs').mkdir()
 (output/'downloads').mkdir()
 shutil.copytree(DOCS/'site/assets', output/'assets')
