@@ -45,7 +45,7 @@ Release 还提供 `.sha256`、`SHA256SUMS`、`SHA256SUMS.asc`、公钥、
 
 这是 M6 的 **TEST Release 测试身份**，不是已完成组织认证的正式生产签名身份，
 主/子钥到期日为 2027-05-01。正式离线密钥保管、轮换与泄漏恢复尚需部署、演练。
-ISO 和签名清单由该测试密钥签署；重组工具本身不在原 M6 签名清单中，可对照
+包含 ISO 与分片散列的清单由该测试密钥签署；重组工具本身不在原 M6 签名清单中，可对照
 [v0.1.0 源码](https://github.com/VyskoyeNebo/BasaltOS/blob/v0.1.0/scripts/join-iso.py)审阅。
 
 完整步骤见 [下载、核验与安装](https://vyskoyenebo.github.io/BasaltOS/docs/QUICKSTART.html)。

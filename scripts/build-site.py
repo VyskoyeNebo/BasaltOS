@@ -137,6 +137,8 @@ for source, destination in sources.items():
     historical = ''
     if re.match(r'(?:M[1-6]-RESULTS|BUILD(?:-M[2-5])?|RELEASE)$', source.stem):
         historical = f'<div class="historical">这份文档保留对应里程碑的原始记录，部分路径与地址属于当时的本地环境。当前公开版请先阅读<a href="{base}docs/QUICKSTART.html">快速开始</a>与<a href="{base}docs/RELEASE-NOTES-0.1.0.html">0.1.0 发行说明</a>。</div>'
+    if source.stem == 'SECURITY':
+        historical = f'<div class="historical">本页保留 M5 安全与恢复记录。M6 起已为原 Calamares 包补充测试签名，本次发布采用严格验签流程；下文“构建时例外”描述的是 M5 当时的构建方式。当前签名与仓库状态见<a href="{base}docs/RELEASE.html">M6 发布流程</a>及<a href="{base}docs/PUBLISHING.html">公开发版维护</a>。</div>'
     toc = renderer.toc if len(renderer.toc_tokens)>0 and renderer.toc != '<div class="toc">\n<ul></ul>\n</div>\n' else ''
     page = f'''<!doctype html><html lang="zh-CN"><head>{head()}<title>{html.escape(title)} · BasaltOS 文档</title></head><body>{header()}<main id="main" class="wrap docs-layout"><div><button class="docs-toggle" type="button" aria-expanded="false" aria-controls="docs-menu">文档目录与搜索</button>{sidebar(source.stem)}</div><article class="doc"><div class="doc-meta"><span>BasaltOS / 文档</span><a href="{REPOSITORY}/blob/main/docs/{quote(source.name)}">查看 Markdown 源文 ↗</a></div>{historical}{content if not toc else content.replace('</h1>','</h1>'+toc,1)}</article></main>{footer()}</body></html>'''
     (output/destination).write_text(page, encoding='utf-8', newline='\n')
