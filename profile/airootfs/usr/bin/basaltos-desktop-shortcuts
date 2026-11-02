@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Add the four BasaltOS launchers for this user, preserving existing files.
+set -euo pipefail
+if [[ "${1:-}" == --help ]]; then
+    echo 'Usage: basaltos-desktop-shortcuts (run as the desktop user, without sudo)'
+    exit 0
+fi
+(( $# == 0 )) || { echo 'Unexpected argument.' >&2; exit 2; }
+desktop=$(xdg-user-dir DESKTOP)
+[[ -n "$desktop" && "$desktop" == /* && "$desktop" != "$HOME" ]] || {
+    echo 'Desktop directory disabled; no shortcuts added.' >&2; exit 0;
+}
+mkdir -p -- "$desktop"
+changed=0
+for name in computer trash files settings; do
+    source="/etc/skel/Desktop/basaltos-$name.desktop"
+    destination="$desktop/basaltos-$name.desktop"
+    [[ -f "$source" ]] || { echo "Missing template: $source" >&2; exit 1; }
+    if [[ ! -e "$destination" && ! -L "$destination" ]]; then
+        (set -o noclobber; cat -- "$source" > "$destination")
+        chmod 755 -- "$destination"
+        changed=1
+    fi
+done
+# Application caches are per user; refresh in the real user's session.
+if (( changed )) && command -v kbuildsycoca6 >/dev/null 2>&1; then
+    kbuildsycoca6 --noincremental
+fi

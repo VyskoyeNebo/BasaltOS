@@ -3,7 +3,7 @@
 iso_name="basaltos"
 iso_label="basaltos"
 iso_publisher="BasaltOS"
-iso_application="BasaltOS M6 Release Live ISO"
+iso_application="BasaltOS 0.1.1 Desktop Fix Live ISO"
 iso_version="$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y.%m.%d)"
 install_dir="basalt"
 bootmodes=('bios.syslinux' 'uefi.systemd-boot')
@@ -11,6 +11,11 @@ pacman_conf="pacman.conf"
 airootfs_image_type="squashfs"
 airootfs_image_tool_options=('-comp' 'xz' '-Xbcj' 'x86' '-b' '1M' '-Xdict-size' '1M')
 file_permissions=(
+  ["/etc/skel/Desktop/basaltos-settings.desktop"]="0:0:755"
+  ["/etc/skel/Desktop/basaltos-files.desktop"]="0:0:755"
+  ["/etc/skel/Desktop/basaltos-trash.desktop"]="0:0:755"
+  ["/etc/skel/Desktop/basaltos-computer.desktop"]="0:0:755"
+  ["/usr/bin/basaltos-desktop-shortcuts"]="0:0:755"
   ["/usr/bin/basaltos-repo"]="0:0:755"
   ["/usr/lib/basaltos/init-keyring.sh"]="0:0:755"
   ["/usr/bin/basaltos-update"]="0:0:755"

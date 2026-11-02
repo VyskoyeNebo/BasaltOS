@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=BasaltOS desktop shortcuts
+Name[zh_CN]=BasaltOS 桌面入口
+Exec=/usr/bin/basaltos-desktop-shortcuts
+OnlyShowIn=KDE;
+NoDisplay=true
+X-KDE-autostart-phase=2

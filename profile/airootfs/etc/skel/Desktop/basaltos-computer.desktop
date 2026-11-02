@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Computer
+Name[zh_CN]=计算机
+Comment=Browse the filesystem and devices in Dolphin
+Comment[zh_CN]=浏览文件系统；磁盘与可移动设备位于侧栏
+Exec=dolphin --new-window /
+TryExec=dolphin
+Icon=computer
+Terminal=false
+Categories=Qt;KDE;System;
+StartupNotify=true

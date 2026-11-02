@@ -1,5 +1,6 @@
 NAME="BasaltOS"
-PRETTY_NAME="BasaltOS M4"
+PRETTY_NAME="BasaltOS 0.1.1"
+VERSION_ID=0.1.1
 ID=basaltos
 ID_LIKE=arch
 BUILD_ID=rolling

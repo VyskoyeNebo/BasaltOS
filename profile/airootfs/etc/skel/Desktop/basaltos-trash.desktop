@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Trash
+Name[zh_CN]=回收站
+Comment=Browse deleted files in Trash
+Comment[zh_CN]=查看和恢复已放入废纸篓的文件
+Exec=dolphin --new-window trash:/
+TryExec=dolphin
+Icon=user-trash
+Terminal=false
+Categories=Qt;KDE;System;
+StartupNotify=true

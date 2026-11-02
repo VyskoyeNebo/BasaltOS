@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=File Manager
+Name[zh_CN]=文件管理器
+Comment=Manage files and folders with Dolphin
+Comment[zh_CN]=使用 Dolphin 管理文件和文件夹
+Exec=dolphin --new-window
+TryExec=dolphin
+Icon=system-file-manager
+Terminal=false
+Categories=Qt;KDE;System;
+StartupNotify=true
