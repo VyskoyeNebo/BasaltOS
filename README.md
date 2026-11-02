@@ -1,6 +1,39 @@
 # BasaltOS
 
 基于 Arch Linux 官方 archiso 的游戏与安全向发行版项目。
+
+[官网](https://vyskoyenebo.github.io/BasaltOS/) ·
+[文档](https://vyskoyenebo.github.io/BasaltOS/docs/QUICKSTART.html) ·
+[下载 0.1.0](https://github.com/VyskoyeNebo/BasaltOS/releases/tag/v0.1.0)
+
+**0.1.0 是首个公开版本，复用已经验收的 M6 镜像。** 当前使用测试签名身份，
+Secure Boot 尚未启用，硬件与游戏兼容范围见 [发行说明](docs/RELEASE-NOTES-0.1.0.md)。
+
+## 快速开始
+
+1. 从 [Release](https://github.com/VyskoyeNebo/BasaltOS/releases/tag/v0.1.0) 下载三个 ISO 分片、
+   `SHA256SUMS`、`SHA256SUMS.asc`、公钥和 `.sha256` 文件。
+2. 核对公钥完整指纹并验证签名清单。用附件中的 `join-iso.py` 或 Linux 二进制拼接重组完整 ISO。
+3. 确认完整 ISO 的 SHA-256，再用镜像写盘工具写入空 U 盘。写盘会清空所选 U 盘，先核对盘符与容量。
+4. 从 U 盘启动，Live 登录为 `gamer / basaltos`。双击“安装 BasaltOS”，核对目标磁盘，按需选择 LUKS2 加密并创建自己的账号。
+
+Windows（需 Python）重组与校验示例：
+
+```powershell
+python .\join-iso.py --release-dir . --version 0.1.0-m6 --output .\basaltos-0.1.0-m6-x86_64.iso
+Get-FileHash .\basaltos-0.1.0-m6-x86_64.iso -Algorithm SHA256
+```
+
+完整 ISO：2,353,299,456 bytes，SHA-256：
+
+```text
+0fd12156f204a6b6535c19aca1ae0f229e8e8b02579772602e68530034a27281
+```
+
+完整步骤、签名信任边界和安装注意事项见 [快速开始](docs/QUICKSTART.md)。
+
+## 进度与文档
+
 已完成 M1 命令行 Live ISO 与 M2 KDE Plasma 图形桌面、中文拼音输入。
 已完成 M3 Calamares 图形安装器、可选 LUKS2 加密、btrfs 子卷与 Snapper。
 M3 ISO 已完成完整 GUI 安装，并通过 UEFI、BIOS 硬盘启动与 KDE 登录验收。
@@ -9,8 +42,11 @@ Lutris 主界面和 Gamescope 嵌套窗口均通过最终 ISO 的 QEMU 验收。
 M5 加入默认拒绝入站的 nftables、严格本地包签名、快照与 boot 备份更新工具，
 以及每周只提醒的更新检查和隐私默认设置。最终验收记录见下方 M5 文档。
 M6 加入测试 GPG 签名、自建 pacman 仓库、`--check-only` 与离线签名发布附件流程。
-自建仓库默认关闭，GitHub Pages 地址暂为占位，本轮不公开上传或部署。
+自建仓库默认关闭，试用公开源之前请阅读测试密钥与信任范围。
+M7 增加个人公开仓库、官网、文档站与 0.1.0 Release，不改动 M6 系统镜像。
 
+- M7 发布状态与链接：[`docs/M7-RESULTS.md`](docs/M7-RESULTS.md)
+- 官网与公开发版维护：[`docs/PUBLISHING.md`](docs/PUBLISHING.md)
 - 当前 M6 构建、仓库与发版：[`docs/RELEASE.md`](docs/RELEASE.md)
 - M6 产物与验证证据：[`docs/M6-RESULTS.md`](docs/M6-RESULTS.md)
 - 测试公钥：[`packaging/basaltos-key.asc`](packaging/basaltos-key.asc)

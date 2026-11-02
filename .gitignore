@@ -10,3 +10,7 @@ __pycache__/
 # Release private material belongs only in ignored work/, never in source.
 *.sec.asc
 *.private
+*.iso
+*.iso.part*
+*.vdi
+*.qcow2
